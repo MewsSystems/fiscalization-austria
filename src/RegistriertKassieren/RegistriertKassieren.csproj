@@ -20,6 +20,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <LangVersion>7</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -30,6 +31,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Albireo.Base32, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Albireo.Base32.1.0.1.0\lib\portable-net40+sl50+wp80+win\Albireo.Base32.dll</HintPath>
+    </Reference>
+    <Reference Include="BouncyCastle.Crypto, Version=1.8.1.0, Culture=neutral, PublicKeyToken=0e99375e54769942">
+      <HintPath>..\packages\BouncyCastle.1.8.1\lib\BouncyCastle.Crypto.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
@@ -44,8 +51,20 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Dto\CurrencyValue.cs" />
+    <Compile Include="Dto\DateTimeWithTimeZone.cs" />
+    <Compile Include="Dto\Identifiers\CertificateSerialNumber.cs" />
+    <Compile Include="Dto\Identifiers\ReceiptNumber.cs" />
+    <Compile Include="Dto\Identifiers\Identifier.cs" />
+    <Compile Include="Dto\Identifiers\IntIdentifier.cs" />
+    <Compile Include="Dto\Identifiers\RegisterIdentifier.cs" />
+    <Compile Include="Dto\Identifiers\StringIdentifier.cs" />
+    <Compile Include="Dto\Signature.cs" />
     <Compile Include="Dto\SignerInput.cs" />
     <Compile Include="Dto\SignatureData.cs" />
+    <Compile Include="Dto\Receipt.cs" />
+    <Compile Include="Dto\TaxData.cs" />
+    <Compile Include="Patterns.cs" />
     <Compile Include="Signer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

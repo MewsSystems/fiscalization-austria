@@ -1,13 +1,17 @@
-﻿using Newtonsoft.Json;
+﻿using System;
+using System.Text;
+using Newtonsoft.Json;
 
 namespace RegistriertKassieren.Dto
 {
     public sealed class SignerInput
     {
-        public SignerInput(string password)
+        public SignerInput(string password, Receipt receipt)
         {
             Password = password;
-            ToBeSigned = GetDataToBeSigned();
+            Receipt = receipt;
+
+            ToBeSigned = Convert.ToBase64String(Encoding.UTF8.GetBytes(receipt.SignatureData));
         }
 
         [JsonProperty("password")]
@@ -16,9 +20,6 @@ namespace RegistriertKassieren.Dto
         [JsonProperty("to_be_signed")]
         public string ToBeSigned { get; }
 
-        private string GetDataToBeSigned()
-        {
-            return "c2FtcGxlIHRleHQgZm9yIHNpZ25pbmcgd2l0aCByZWdpc3RyaWVya2Fzc2UubW9iaWxlIG9ubGluZSBzZXJ2aWNl";
-        }
+        private Receipt Receipt { get; }
     }
 }
