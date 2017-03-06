@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace RegistriertKassieren.Dto.Identifiers
+namespace Mews.Registrierkassen.Dto.Identifiers
 {
     public class IntIdentifier : Identifier<int>
     {

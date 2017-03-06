@@ -1,4 +1,4 @@
-﻿namespace RegistriertKassieren.Dto.Identifiers
+﻿namespace Mews.Registrierkassen.Dto.Identifiers
 {
     public sealed class CertificateSerialNumber : StringIdentifier
     {

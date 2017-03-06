@@ -3,11 +3,11 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using Albireo.Base32;
+using Mews.Registrierkassen.Dto.Identifiers;
 using Org.BouncyCastle.Crypto.Parameters;
 using Org.BouncyCastle.Security;
-using RegistriertKassieren.Dto.Identifiers;
 
-namespace RegistriertKassieren.Dto
+namespace Mews.Registrierkassen.Dto
 {
     public sealed class Receipt
     {

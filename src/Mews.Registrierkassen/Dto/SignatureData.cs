@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace RegistriertKassieren.Dto
+namespace Mews.Registrierkassen.Dto
 {
     public sealed class SignatureData
     {

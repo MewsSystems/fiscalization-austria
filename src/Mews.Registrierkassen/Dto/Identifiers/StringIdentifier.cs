@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Text.RegularExpressions;
 
-namespace RegistriertKassieren.Dto.Identifiers
+namespace Mews.Registrierkassen.Dto.Identifiers
 {
     public class StringIdentifier : Identifier<string>
     {

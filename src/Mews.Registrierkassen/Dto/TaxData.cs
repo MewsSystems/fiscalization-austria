@@ -1,4 +1,4 @@
-﻿namespace RegistriertKassieren.Dto
+﻿namespace Mews.Registrierkassen.Dto
 {
     public sealed class TaxData
     {

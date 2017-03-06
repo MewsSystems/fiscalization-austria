@@ -1,6 +1,6 @@
 ﻿using System.Text.RegularExpressions;
 
-namespace RegistriertKassieren
+namespace Mews.Registrierkassen
 {
     public class Patterns
     {
@@ -9,5 +9,7 @@ namespace RegistriertKassieren
         public static readonly Regex RegisterIdentifier = new Regex(".+");
 
         public static readonly Regex CertificateSerialNumber = new Regex(".+");
+
+        public static readonly Regex UserIdentifier = new Regex(".+");
     }
 }

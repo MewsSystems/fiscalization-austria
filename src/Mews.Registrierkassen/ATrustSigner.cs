@@ -1,24 +1,38 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Net;
+using Mews.Registrierkassen.Dto;
+using Mews.Registrierkassen.Dto.ATrust;
 using Newtonsoft.Json;
-using RegistriertKassieren.Dto;
 
-namespace RegistriertKassieren
+namespace Mews.Registrierkassen
 {
-    public sealed class Signer
+    public sealed class ATrustSigner
     {
-        static Signer()
+        static ATrustSigner()
         {
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12 | SecurityProtocolType.Tls11;
         }
 
-        public SignatureData Sign(SignerInput input)
+        public SignatureData Sign(ATrustSignerInput input)
         {
             var responseBody = PostJson(
-                url: "https://hs-abnahme.a-trust.at/RegistrierkasseMobile/v1/u123456789/Sign",
+                url: $"https://hs-abnahme.a-trust.at/RegistrierkasseMobile/v1/{input.Credentials.User.Value}/Sign",
                 requestBody: JsonConvert.SerializeObject(input)
             );
             return JsonConvert.DeserializeObject<SignatureData>(responseBody);
+        }
+
+        public bool VerifyCredentials(ATrustCredentials credentials)
+        {
+            try
+            {
+                return Sign(new ATrustSignerInput(credentials, "test string")).Signature != null;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
         }
 
         private string PostJson(string url, string requestBody)

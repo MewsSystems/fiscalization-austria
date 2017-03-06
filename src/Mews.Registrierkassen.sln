@@ -1,11 +1,11 @@
-﻿
+
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.26206.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RegistriertKassieren", "RegistriertKassieren\RegistriertKassieren.csproj", "{620047B3-835E-4A34-B148-A5A097769F45}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mews.Registrierkassen", "Mews.Registrierkassen\Mews.Registrierkassen.csproj", "{620047B3-835E-4A34-B148-A5A097769F45}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RegistriertKassieren.Tests", "RegistriertKassieren.Tests\RegistriertKassieren.Tests.csproj", "{EDDE392A-63D1-4FEE-BEE8-6877A422474A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mews.Registrierkassen.Tests", "Mews.Registrierkassen.Tests\Mews.Registrierkassen.Tests.csproj", "{EDDE392A-63D1-4FEE-BEE8-6877A422474A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

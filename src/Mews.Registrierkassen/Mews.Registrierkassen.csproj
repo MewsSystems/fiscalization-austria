@@ -7,10 +7,11 @@
     <ProjectGuid>{620047B3-835E-4A34-B148-A5A097769F45}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>RegistriertKassieren</RootNamespace>
-    <AssemblyName>RegistriertKassieren</AssemblyName>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <RootNamespace>Mews.Registrierkassen</RootNamespace>
+    <AssemblyName>Mews.Registrierkassen</AssemblyName>
+    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -59,17 +60,21 @@
     <Compile Include="Dto\Identifiers\IntIdentifier.cs" />
     <Compile Include="Dto\Identifiers\RegisterIdentifier.cs" />
     <Compile Include="Dto\Identifiers\StringIdentifier.cs" />
+    <Compile Include="Dto\Identifiers\ATrustUserIdentifier.cs" />
     <Compile Include="Dto\Signature.cs" />
-    <Compile Include="Dto\SignerInput.cs" />
+    <Compile Include="Dto\ATrust\ATrustCredentials.cs" />
+    <Compile Include="Dto\ATrust\ATrustSignerInput.cs" />
     <Compile Include="Dto\SignatureData.cs" />
     <Compile Include="Dto\Receipt.cs" />
     <Compile Include="Dto\TaxData.cs" />
     <Compile Include="Patterns.cs" />
-    <Compile Include="Signer.cs" />
+    <Compile Include="AesKeyGenerator.cs" />
+    <Compile Include="ATrustSigner.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <None Include="Mews.Registrierkassen.nuspec" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

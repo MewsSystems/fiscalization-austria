@@ -6,9 +6,9 @@
     <ProjectGuid>{EDDE392A-63D1-4FEE-BEE8-6877A422474A}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>RegistriertKassieren.Tests</RootNamespace>
-    <AssemblyName>RegistriertKassieren.Tests</AssemblyName>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <RootNamespace>Mews.Registrierkassen.Tests</RootNamespace>
+    <AssemblyName>Mews.Registrierkassen.Tests</AssemblyName>
+    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
@@ -16,6 +16,7 @@
     <ReferencePath>$(ProgramFiles)\Common Files\microsoft shared\VSTT\$(VisualStudioVersion)\UITestExtensionPackages</ReferencePath>
     <IsCodedUITest>False</IsCodedUITest>
     <TestProjectType>UnitTest</TestProjectType>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -70,16 +71,16 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="SignerTests.cs" />
+    <Compile Include="ATrustSignerTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\RegistriertKassieren\RegistriertKassieren.csproj">
+    <ProjectReference Include="..\Mews.RegistrierKassen\Mews.Registrierkassen.csproj">
       <Project>{620047B3-835E-4A34-B148-A5A097769F45}</Project>
-      <Name>RegistriertKassieren</Name>
+      <Name>Mews.Registrierkassen</Name>
     </ProjectReference>
   </ItemGroup>
   <Choose>
