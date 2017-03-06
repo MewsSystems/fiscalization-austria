@@ -1,1 +1,1 @@
-# registriert-kassieren
+# registrierkassen
