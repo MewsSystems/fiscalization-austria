@@ -7,7 +7,7 @@ namespace Mews.Registrierkassen
         public static byte[] GetNext()
         {
             var random = new SecureRandom();
-            var bytes = new byte[16];
+            var bytes = new byte[32];
             random.NextBytes(bytes);
             return bytes;
         }

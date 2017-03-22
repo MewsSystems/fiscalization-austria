@@ -1,6 +1,6 @@
 ﻿using Mews.Registrierkassen.Dto.Identifiers;
 
-namespace Mews.Registrierkassen.Dto.ATrust
+namespace Mews.Registrierkassen.Signers.Dto
 {
     public sealed class ATrustCredentials
     {

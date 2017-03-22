@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Mews.Registrierkassen.Dto
+﻿namespace Mews.Registrierkassen.Dto
 {
     public class Signature
     {

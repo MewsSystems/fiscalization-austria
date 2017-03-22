@@ -28,9 +28,8 @@ namespace Mews.Registrierkassen.Dto
             Turnover = turnover ?? throw new ArgumentException("The turnover has to be specified.");
             CertificateSerialNumber = certificateSerialNumber ?? throw new ArgumentException("The certificate serial number has to be specified.");
             PreviousSignature = previousSignature;
-            CertificateSerialNumber = certificateSerialNumber;
             Created = created ?? DateTimeWithTimeZone.Now;
-            Suite = "R1-AT0";
+            Suite = "R1-AT100";
             Key = key;
 
             var chainValue = ComputeChainValue();
@@ -38,8 +37,8 @@ namespace Mews.Registrierkassen.Dto
             var encryptedTurnoverBase32 = Base32.Encode(Convert.FromBase64String(encryptedTurnoverBase64));
             var previousSignatureBase32 = Base32.Encode(Convert.FromBase64String(chainValue));
 
-            SignatureData = $"_{Suite}_{RegisterIdentifier.Value}_{Number.Value}_{FormatDate(Created)}_{FormatDecimal(TaxData.StandardRate.Value)}_{FormatDecimal(TaxData.ReducedRate.Value)}_{FormatDecimal(TaxData.LowerReducedRate.Value)}_{FormatDecimal(TaxData.ZeroRate.Value)}_{FormatDecimal(TaxData.SpecialRate.Value)}_{encryptedTurnoverBase64}_{CertificateSerialNumber}_{chainValue}";
-            OcrData = $"_{Suite}_{RegisterIdentifier.Value}_{Number.Value}_{FormatDate(Created)}_{FormatDecimal(TaxData.StandardRate.Value)}_{FormatDecimal(TaxData.ReducedRate.Value)}_{FormatDecimal(TaxData.LowerReducedRate.Value)}_{FormatDecimal(TaxData.ZeroRate.Value)}_{FormatDecimal(TaxData.SpecialRate.Value)}_{encryptedTurnoverBase32}_{CertificateSerialNumber}_{previousSignatureBase32}";
+            DataToBeSigned = $"_{Suite}_{RegisterIdentifier.Value}_{Number.Value}_{FormatDate(Created)}_{FormatDecimal(TaxData.StandardRate.Value)}_{FormatDecimal(TaxData.ReducedRate.Value)}_{FormatDecimal(TaxData.LowerReducedRate.Value)}_{FormatDecimal(TaxData.ZeroRate.Value)}_{FormatDecimal(TaxData.SpecialRate.Value)}_{encryptedTurnoverBase64}_{certificateSerialNumber}_{chainValue}";
+            OcrDataWithoutSignature = $"_{Suite}_{RegisterIdentifier.Value}_{Number.Value}_{FormatDate(Created)}_{FormatDecimal(TaxData.StandardRate.Value)}_{FormatDecimal(TaxData.ReducedRate.Value)}_{FormatDecimal(TaxData.LowerReducedRate.Value)}_{FormatDecimal(TaxData.ZeroRate.Value)}_{FormatDecimal(TaxData.SpecialRate.Value)}_{encryptedTurnoverBase32}_{certificateSerialNumber}_{previousSignatureBase32}";
         }
 
         public ReceiptNumber Number { get; }
@@ -56,9 +55,14 @@ namespace Mews.Registrierkassen.Dto
 
         public Signature PreviousSignature { get; }
 
-        public string SignatureData { get; }
+        public string DataToBeSigned { get; }
 
-        public string OcrData { get; }
+        public string OcrDataWithoutSignature { get; }
+
+        public string QrDataWithoutSignature
+        {
+            get { return DataToBeSigned; }
+        }
 
         public string Suite { get; }
 
@@ -69,18 +73,25 @@ namespace Mews.Registrierkassen.Dto
             var sum = TaxData.Sum();
             var counter = (Turnover.Value + sum) * 100;
             var registryReceiptId = RegisterIdentifier.Value + Number.Value;
-            var registryReceiptIdHash = Sha256(Encoding.UTF8.GetBytes(registryReceiptId));
+            var ivBytes = Encoding.UTF8.GetBytes(registryReceiptId);
+            var registryReceiptIdHash = Sha256(ivBytes);
             var encryptedValue = SymmetricEncrypt(registryReceiptIdHash, (long) counter, Key);
 
             return Convert.ToBase64String(encryptedValue);
         }
 
-        private byte[] SymmetricEncrypt(string hash, long value, byte[] key)
+        private byte[] SymmetricEncrypt(byte[] hash, long value, byte[] key)
         {
+            sbyte[] signed = Array.ConvertAll(hash, b => unchecked((sbyte)b));
+            byte[] bytes = (byte[])(Array)signed;
+
             var cipher = CipherUtilities.GetCipher("AES/CTR/NoPadding");
-            var iv = Encoding.UTF8.GetBytes(hash).Take(16).ToArray();
+            var iv = bytes.Take(16).ToArray();
             cipher.Init(forEncryption: true, parameters: new ParametersWithIV(new KeyParameter(key), iv));
-            cipher.ProcessBytes(BitConverter.GetBytes(value));
+            var valueBytes = BitConverter.GetBytes(value).Reverse().Take(8).ToArray();
+            /*var finalBytes = new byte[16];
+            Array.Copy(valueBytes, finalBytes, 8);*/
+            cipher.ProcessBytes(valueBytes);
             return cipher.DoFinal();
         }
 
@@ -88,7 +99,7 @@ namespace Mews.Registrierkassen.Dto
         {
             var input = PreviousSignature?.Base64Value ?? RegisterIdentifier.Value;
             var hash = Sha256(Encoding.UTF8.GetBytes(input));
-            return Convert.ToBase64String(Encoding.UTF8.GetBytes(hash));
+            return Convert.ToBase64String(hash.Take(8).ToArray());
         }
 
         private string FormatDate(DateTimeWithTimeZone dateTimeWithTimeZone)
@@ -104,12 +115,9 @@ namespace Mews.Registrierkassen.Dto
             return String.Format(System.Globalization.CultureInfo.GetCultureInfo("de-AT"), "{0:F2}", amount);
         }
 
-        private string Sha256(byte[] toBeHashed)
+        private byte[] Sha256(byte[] toBeHashed)
         {
-            using (var sha256 = SHA256.Create())
-            {
-                return Encoding.UTF8.GetString(sha256.ComputeHash(toBeHashed));
-            }
+            return new SHA256Managed().ComputeHash(toBeHashed);
         }
     }
 }

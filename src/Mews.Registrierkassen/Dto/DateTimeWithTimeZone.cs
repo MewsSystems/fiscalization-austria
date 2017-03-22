@@ -16,9 +16,7 @@ namespace Mews.Registrierkassen.Dto
         {
             get
             {
-                var dateTime = DateTime.UtcNow;
-                var austrianTime = TimeZoneInfo.ConvertTimeFromUtc(dateTime, AustrianTimezone);
-                return new DateTimeWithTimeZone(austrianTime, AustrianTimezone);
+                return new DateTimeWithTimeZone(DateTime.UtcNow, TimeZoneInfo.Utc);
             }
         }
 

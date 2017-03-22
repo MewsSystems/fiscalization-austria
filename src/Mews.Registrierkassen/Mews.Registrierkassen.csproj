@@ -44,6 +44,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -52,6 +53,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Dto\CertificateInfo.cs" />
     <Compile Include="Dto\CurrencyValue.cs" />
     <Compile Include="Dto\DateTimeWithTimeZone.cs" />
     <Compile Include="Dto\Identifiers\CertificateSerialNumber.cs" />
@@ -62,17 +64,19 @@
     <Compile Include="Dto\Identifiers\StringIdentifier.cs" />
     <Compile Include="Dto\Identifiers\ATrustUserIdentifier.cs" />
     <Compile Include="Dto\Signature.cs" />
-    <Compile Include="Dto\ATrust\ATrustCredentials.cs" />
-    <Compile Include="Dto\ATrust\ATrustSignerInput.cs" />
-    <Compile Include="Dto\SignatureData.cs" />
+    <Compile Include="Dto\ATrustCredentials.cs" />
+    <Compile Include="Dto\ATrustSignerInput.cs" />
+    <Compile Include="Dto\SignatureResponse.cs" />
     <Compile Include="Dto\Receipt.cs" />
+    <Compile Include="Dto\SignerOutput.cs" />
     <Compile Include="Dto\TaxData.cs" />
     <Compile Include="Patterns.cs" />
     <Compile Include="AesKeyGenerator.cs" />
-    <Compile Include="ATrustSigner.cs" />
+    <Compile Include="ATrustClient.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="packages.config" />
     <None Include="Mews.Registrierkassen.nuspec" />
   </ItemGroup>
