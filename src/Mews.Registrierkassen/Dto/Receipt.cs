@@ -75,24 +75,33 @@ namespace Mews.Registrierkassen.Dto
             var registryReceiptId = RegisterIdentifier.Value + Number.Value;
             var ivBytes = Encoding.UTF8.GetBytes(registryReceiptId);
             var registryReceiptIdHash = Sha256(ivBytes);
-            var encryptedValue = SymmetricEncrypt(registryReceiptIdHash, (long) counter, Key);
+            var encryptedValue = AesCtr(registryReceiptIdHash, (long) counter, Key);
 
             return Convert.ToBase64String(encryptedValue);
         }
 
-        private byte[] SymmetricEncrypt(byte[] hash, long value, byte[] key)
+        private byte[] AesCtr(byte[] hash, long value, byte[] key)
         {
-            sbyte[] signed = Array.ConvertAll(hash, b => unchecked((sbyte)b));
-            byte[] bytes = (byte[])(Array)signed;
+            var iv = GetEncryptInitializationVector(hash);
+            var valueBytes = GetValueBytes(value);
 
             var cipher = CipherUtilities.GetCipher("AES/CTR/NoPadding");
-            var iv = bytes.Take(16).ToArray();
             cipher.Init(forEncryption: true, parameters: new ParametersWithIV(new KeyParameter(key), iv));
-            var valueBytes = BitConverter.GetBytes(value).Reverse().Take(8).ToArray();
-            /*var finalBytes = new byte[16];
-            Array.Copy(valueBytes, finalBytes, 8);*/
             cipher.ProcessBytes(valueBytes);
             return cipher.DoFinal();
+        }
+
+        private byte[] GetEncryptInitializationVector(byte[] hash)
+        {
+            return hash.Take(16).ToArray();
+        }
+
+        private byte[] GetValueBytes(long value)
+        {
+            var originalBytes = BitConverter.GetBytes(value);
+            var bytesSubset = originalBytes.Take(8);
+            var orderedBytes = BitConverter.IsLittleEndian ? bytesSubset.Reverse() : bytesSubset;
+            return orderedBytes.ToArray();
         }
 
         private string ComputeChainValue()
