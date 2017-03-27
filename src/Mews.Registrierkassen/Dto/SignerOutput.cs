@@ -10,8 +10,9 @@ namespace Mews.Registrierkassen.Dto
             SignatureResponse = response;
             if (receipt != null)
             {
-                QrCodeRepresentationWithSignature = $"{receipt.QrDataWithoutSignature}_{response.Signature}";
-                OcrCodeRepresentationWithSignature = $"{receipt.OcrDataWithoutSignature}_{response.Signature}";
+                var base64SignatureUrlUnsafe = Base64UrlSafeDecode(response.Signature);
+                QrCodeRepresentationWithSignature = $"{receipt.QrDataWithoutSignature}_{base64SignatureUrlUnsafe}";
+                OcrCodeRepresentationWithSignature = $"{receipt.OcrDataWithoutSignature}_{base64SignatureUrlUnsafe}";
             }
         }
 
@@ -30,10 +31,7 @@ namespace Mews.Registrierkassen.Dto
 
             var sanitizedString = base64UrlSafeString.Replace('-', '+').Replace('_', '/');
             var paddingLength = sanitizedString.Length % 4;
-            var finalBase64String = paddingLength > 0 ? sanitizedString + new string('=', 4 - paddingLength) : sanitizedString;
-
-            var encodedDataAsBytes = Convert.FromBase64String(finalBase64String);
-            return Encoding.UTF8.GetString(encodedDataAsBytes);
+            return paddingLength > 0 ? sanitizedString + new string('=', 4 - paddingLength) : sanitizedString;
         }
     }
 }
