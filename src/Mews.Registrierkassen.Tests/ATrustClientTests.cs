@@ -29,7 +29,7 @@ namespace Mews.Registrierkassen.Tests
                     ),
                     turnover: new CurrencyValue(0.0m), 
                     certificateSerialNumber: new CertificateSerialNumber("-3667961875706356849"),
-                    previousSignature: new Signature("d3YUbS4CoRo="), 
+                    previousJwsRepresentation: new JwsRepresentation("d3YUbS4CoRo="), 
                     key: Convert.FromBase64String("RCsRmHn5tkLQrRpiZq2ucwPpwvHJLiMgLvwrwEImddI="),
                     created: new DateTimeWithTimeZone(
                         new DateTime(2015, 11, 25, 19, 20, 11),

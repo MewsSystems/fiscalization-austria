@@ -63,7 +63,7 @@
     <Compile Include="Dto\Identifiers\RegisterIdentifier.cs" />
     <Compile Include="Dto\Identifiers\StringIdentifier.cs" />
     <Compile Include="Dto\Identifiers\ATrustUserIdentifier.cs" />
-    <Compile Include="Dto\Signature.cs" />
+    <Compile Include="Dto\JwsRepresentation.cs" />
     <Compile Include="Dto\ATrustCredentials.cs" />
     <Compile Include="Dto\ATrustSignerInput.cs" />
     <Compile Include="Dto\SignatureResponse.cs" />

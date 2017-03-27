@@ -17,7 +17,7 @@ namespace Mews.Registrierkassen.Dto
             TaxData taxData,
             CurrencyValue turnover,
             CertificateSerialNumber certificateSerialNumber,
-            Signature previousSignature,
+            JwsRepresentation previousJwsRepresentation,
             byte[] key,
             DateTimeWithTimeZone created = null
         )
@@ -27,7 +27,7 @@ namespace Mews.Registrierkassen.Dto
             TaxData = taxData ?? throw new ArgumentException("The tax data have to be specified.");
             Turnover = turnover ?? throw new ArgumentException("The turnover has to be specified.");
             CertificateSerialNumber = certificateSerialNumber ?? throw new ArgumentException("The certificate serial number has to be specified.");
-            PreviousSignature = previousSignature;
+            PreviousJwsRepresentation = previousJwsRepresentation;
             Created = created ?? DateTimeWithTimeZone.Now;
             Suite = "R1-AT100";
             Key = key;
@@ -53,7 +53,7 @@ namespace Mews.Registrierkassen.Dto
 
         public CertificateSerialNumber CertificateSerialNumber { get; }
 
-        public Signature PreviousSignature { get; }
+        public JwsRepresentation PreviousJwsRepresentation { get; }
 
         public string DataToBeSigned { get; }
 
@@ -106,7 +106,7 @@ namespace Mews.Registrierkassen.Dto
 
         private string ComputeChainValue()
         {
-            var input = PreviousSignature?.Base64Value ?? RegisterIdentifier.Value;
+            var input = PreviousJwsRepresentation?.Value ?? RegisterIdentifier.Value;
             var hash = Sha256(Encoding.UTF8.GetBytes(input));
             return Convert.ToBase64String(hash.Take(8).ToArray());
         }
