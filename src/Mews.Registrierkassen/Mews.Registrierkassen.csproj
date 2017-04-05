@@ -53,10 +53,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ATrustEnvironment.cs" />
+    <Compile Include="Dto\Identifiers\Base64UrlSafeString.cs" />
     <Compile Include="Dto\CertificateInfo.cs" />
     <Compile Include="Dto\CurrencyValue.cs" />
-    <Compile Include="Dto\DateTimeWithTimeZone.cs" />
+    <Compile Include="Dto\LocalDateTime.cs" />
+    <Compile Include="Dto\Identifiers\Base64UrlUnsafeString.cs" />
     <Compile Include="Dto\Identifiers\CertificateSerialNumber.cs" />
+    <Compile Include="Dto\Identifiers\EndpointUrl.cs" />
     <Compile Include="Dto\Identifiers\ReceiptNumber.cs" />
     <Compile Include="Dto\Identifiers\Identifier.cs" />
     <Compile Include="Dto\Identifiers\IntIdentifier.cs" />
@@ -69,8 +73,8 @@
     <Compile Include="Dto\SignatureResponse.cs" />
     <Compile Include="Dto\Receipt.cs" />
     <Compile Include="Dto\SignerOutput.cs" />
+    <Compile Include="Dto\SimpleHttpClient.cs" />
     <Compile Include="Dto\TaxData.cs" />
-    <Compile Include="Patterns.cs" />
     <Compile Include="AesKeyGenerator.cs" />
     <Compile Include="ATrustClient.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

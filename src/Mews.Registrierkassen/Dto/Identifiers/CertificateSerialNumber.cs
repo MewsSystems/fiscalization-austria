@@ -1,9 +1,13 @@
-﻿namespace Mews.Registrierkassen.Dto.Identifiers
+﻿using System.Text.RegularExpressions;
+
+namespace Mews.Registrierkassen.Dto.Identifiers
 {
     public sealed class CertificateSerialNumber : StringIdentifier
     {
+        public static readonly Regex Pattern = new Regex(".+");
+
         public CertificateSerialNumber(string value)
-            : base(value, Patterns.CertificateSerialNumber)
+            : base(value, Pattern)
         {
         }
     }

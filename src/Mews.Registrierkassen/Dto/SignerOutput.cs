@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Text;
+using Mews.Registrierkassen.Dto.Identifiers;
 
 namespace Mews.Registrierkassen.Dto
 {
@@ -10,9 +11,9 @@ namespace Mews.Registrierkassen.Dto
             SignatureResponse = response;
             if (receipt != null)
             {
-                var base64SignatureUrlUnsafe = Base64UrlSafeDecode(response.Signature);
-                QrCodeRepresentationWithSignature = $"{receipt.QrDataWithoutSignature}_{base64SignatureUrlUnsafe}";
-                OcrCodeRepresentationWithSignature = $"{receipt.OcrDataWithoutSignature}_{base64SignatureUrlUnsafe}";
+                var base64SignatureUrlUnsafe = response.Signature.Base64UrlUnsafeString;
+                QrCodeRepresentationWithSignature = $"{receipt.QrDataWithoutSignature}_{base64SignatureUrlUnsafe.Value}";
+                OcrCodeRepresentationWithSignature = $"{receipt.OcrDataWithoutSignature}_{base64SignatureUrlUnsafe.Value}";
             }
         }
 
@@ -21,17 +22,5 @@ namespace Mews.Registrierkassen.Dto
         public string QrCodeRepresentationWithSignature { get; }
 
         public string OcrCodeRepresentationWithSignature { get; }
-
-        private string Base64UrlSafeDecode(string base64UrlSafeString)
-        {
-            if (string.IsNullOrEmpty(base64UrlSafeString))
-            {
-                throw new ArgumentException("The decoded string is empty or null.");
-            }
-
-            var sanitizedString = base64UrlSafeString.Replace('-', '+').Replace('_', '/');
-            var paddingLength = sanitizedString.Length % 4;
-            return paddingLength > 0 ? sanitizedString + new string('=', 4 - paddingLength) : sanitizedString;
-        }
     }
 }

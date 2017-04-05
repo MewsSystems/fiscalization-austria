@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
@@ -19,8 +20,7 @@ namespace Mews.Registrierkassen.Dto
             CertificateSerialNumber certificateSerialNumber,
             JwsRepresentation previousJwsRepresentation,
             byte[] key,
-            DateTimeWithTimeZone created = null
-        )
+            LocalDateTime created = null)
         {
             Number = number ?? throw new ArgumentException("The receipt number has to be specified.");
             RegisterIdentifier = registerIdentifier ?? throw new ArgumentException("The register identifier has to be specified.");
@@ -28,7 +28,7 @@ namespace Mews.Registrierkassen.Dto
             Turnover = turnover ?? throw new ArgumentException("The turnover has to be specified.");
             CertificateSerialNumber = certificateSerialNumber ?? throw new ArgumentException("The certificate serial number has to be specified.");
             PreviousJwsRepresentation = previousJwsRepresentation;
-            Created = created ?? DateTimeWithTimeZone.Now;
+            Created = created ?? LocalDateTime.Now;
             Suite = "R1-AT100";
             Key = key;
 
@@ -37,15 +37,42 @@ namespace Mews.Registrierkassen.Dto
             var encryptedTurnoverBase32 = Base32.Encode(Convert.FromBase64String(encryptedTurnoverBase64));
             var previousSignatureBase32 = Base32.Encode(Convert.FromBase64String(chainValue));
 
-            DataToBeSigned = $"_{Suite}_{RegisterIdentifier.Value}_{Number.Value}_{FormatDate(Created)}_{FormatDecimal(TaxData.StandardRate.Value)}_{FormatDecimal(TaxData.ReducedRate.Value)}_{FormatDecimal(TaxData.LowerReducedRate.Value)}_{FormatDecimal(TaxData.ZeroRate.Value)}_{FormatDecimal(TaxData.SpecialRate.Value)}_{encryptedTurnoverBase64}_{certificateSerialNumber}_{chainValue}";
-            OcrDataWithoutSignature = $"_{Suite}_{RegisterIdentifier.Value}_{Number.Value}_{FormatDate(Created)}_{FormatDecimal(TaxData.StandardRate.Value)}_{FormatDecimal(TaxData.ReducedRate.Value)}_{FormatDecimal(TaxData.LowerReducedRate.Value)}_{FormatDecimal(TaxData.ZeroRate.Value)}_{FormatDecimal(TaxData.SpecialRate.Value)}_{encryptedTurnoverBase32}_{certificateSerialNumber}_{previousSignatureBase32}";
+            var commonItems = new List<string>()
+            {
+                Suite,
+                RegisterIdentifier.Value,
+                Number.Value,
+                FormatDate(Created),
+                FormatDecimal(TaxData.StandardRate.Value),
+                FormatDecimal(TaxData.ReducedRate.Value),
+                FormatDecimal(TaxData.LowerReducedRate.Value),
+                FormatDecimal(TaxData.ZeroRate.Value),
+                FormatDecimal(TaxData.SpecialRate.Value),
+            };
+
+            var dataToBeSignedItems = new List<string>
+            {
+                encryptedTurnoverBase64,
+                certificateSerialNumber.Value,
+                chainValue
+            };
+
+            var ocrDataItems = new List<string>
+            {
+                encryptedTurnoverBase32,
+                certificateSerialNumber.Value,
+                previousSignatureBase32
+            };
+
+            DataToBeSigned = $"_{String.Join("_", commonItems.Concat(dataToBeSignedItems))}";
+            OcrDataWithoutSignature = $"_{String.Join("_", commonItems.Concat(ocrDataItems))}";
         }
 
         public ReceiptNumber Number { get; }
 
         public RegisterIdentifier RegisterIdentifier { get; }
 
-        public DateTimeWithTimeZone Created { get; }
+        public LocalDateTime Created { get; }
 
         public TaxData TaxData { get; }
 
@@ -111,10 +138,10 @@ namespace Mews.Registrierkassen.Dto
             return Convert.ToBase64String(hash.Take(8).ToArray());
         }
 
-        private string FormatDate(DateTimeWithTimeZone dateTimeWithTimeZone)
+        private string FormatDate(LocalDateTime localDateTime)
         {
-            var dateTimeUtc = TimeZoneInfo.ConvertTimeToUtc(dateTimeWithTimeZone.DateTime, dateTimeWithTimeZone.TimeZoneInfo);
-            var dateTimeAustria = TimeZoneInfo.ConvertTimeFromUtc(dateTimeUtc, DateTimeWithTimeZone.AustrianTimezone);
+            var dateTimeUtc = TimeZoneInfo.ConvertTimeToUtc(localDateTime.DateTime, localDateTime.TimeZoneInfo);
+            var dateTimeAustria = TimeZoneInfo.ConvertTimeFromUtc(dateTimeUtc, LocalDateTime.AustrianTimezone);
             var date = DateTime.SpecifyKind(new DateTime(dateTimeAustria.Ticks - dateTimeAustria.Ticks % TimeSpan.TicksPerSecond), DateTimeKind.Local);
             return date.ToString("yyyy-MM-ddTHH:mm:ss");
         }

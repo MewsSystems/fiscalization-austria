@@ -16,7 +16,7 @@ namespace Mews.Registrierkassen.Tests
         [Fact]
         public void ATrustSignerWorks()
         {
-            var client = new ATrustClient(Credentials);
+            var client = new ATrustClient(Credentials, ATrustEnvironment.Test);
             var result = client.Sign(new ATrustSignerInput(
                 Credentials.Password,
                 receipt: new Receipt(
@@ -31,9 +31,9 @@ namespace Mews.Registrierkassen.Tests
                     certificateSerialNumber: new CertificateSerialNumber("-3667961875706356849"),
                     previousJwsRepresentation: new JwsRepresentation("d3YUbS4CoRo="), 
                     key: Convert.FromBase64String("RCsRmHn5tkLQrRpiZq2ucwPpwvHJLiMgLvwrwEImddI="),
-                    created: new DateTimeWithTimeZone(
+                    created: new LocalDateTime(
                         new DateTime(2015, 11, 25, 19, 20, 11),
-                        DateTimeWithTimeZone.AustrianTimezone
+                        LocalDateTime.AustrianTimezone
                     )
                 )
             ));
@@ -41,15 +41,9 @@ namespace Mews.Registrierkassen.Tests
         }
 
         [Fact]
-        public void VerificationWorks()
-        {
-            Assert.True(new ATrustClient(Credentials).VerifyCredentials());
-        }
-
-        [Fact]
         public void GetCertificateInfoWorks()
         {
-            var info = new ATrustClient(Credentials).GetCertificateInfo();
+            var info = new ATrustClient(Credentials, ATrustEnvironment.Test).GetCertificateInfo();
             Assert.NotNull(info);
         }
     }

@@ -10,11 +10,12 @@
             CurrencyValue specialRate = null
         )
         {
-            StandardRate = standartRate ?? Fallback;
-            ReducedRate = reducedRate ?? Fallback;
-            LowerReducedRate = lowerReducedRate ?? Fallback;
-            ZeroRate = zeroRate ?? Fallback;
-            SpecialRate = specialRate ?? Fallback;
+            var fallback = new CurrencyValue(0);
+            StandardRate = standartRate ?? fallback;
+            ReducedRate = reducedRate ?? fallback;
+            LowerReducedRate = lowerReducedRate ?? fallback;
+            ZeroRate = zeroRate ?? fallback;
+            SpecialRate = specialRate ?? fallback;
         }
 
         public CurrencyValue StandardRate { get; }
@@ -26,11 +27,6 @@
         public CurrencyValue ZeroRate { get; }
 
         public CurrencyValue SpecialRate { get; }
-
-        private CurrencyValue Fallback
-        {
-            get { return new CurrencyValue(0); }
-        }
 
         public decimal Sum()
         {
