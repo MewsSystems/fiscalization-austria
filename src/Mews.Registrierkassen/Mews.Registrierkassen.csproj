@@ -54,11 +54,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ATrustEnvironment.cs" />
-    <Compile Include="Dto\Identifiers\Base64UrlSafeString.cs" />
+    <Compile Include="Dto\BaseEncoding.cs" />
+    <Compile Include="Dto\ByteValue.cs" />
+    <Compile Include="Dto\EncryptedTurnover.cs" />
+    <Compile Include="Dto\ChainValue.cs" />
+    <Compile Include="Dto\Identifiers\JwsSignature.cs" />
     <Compile Include="Dto\CertificateInfo.cs" />
     <Compile Include="Dto\CurrencyValue.cs" />
     <Compile Include="Dto\LocalDateTime.cs" />
-    <Compile Include="Dto\Identifiers\Base64UrlUnsafeString.cs" />
     <Compile Include="Dto\Identifiers\CertificateSerialNumber.cs" />
     <Compile Include="Dto\Identifiers\EndpointUrl.cs" />
     <Compile Include="Dto\Identifiers\ReceiptNumber.cs" />
@@ -70,6 +73,9 @@
     <Compile Include="Dto\JwsRepresentation.cs" />
     <Compile Include="Dto\ATrustCredentials.cs" />
     <Compile Include="Dto\ATrustSignerInput.cs" />
+    <Compile Include="Dto\MachineReadableData.cs" />
+    <Compile Include="Dto\SignedData.cs" />
+    <Compile Include="Dto\QrData.cs" />
     <Compile Include="Dto\SignatureResponse.cs" />
     <Compile Include="Dto\Receipt.cs" />
     <Compile Include="Dto\SignerOutput.cs" />

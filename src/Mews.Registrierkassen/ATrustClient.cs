@@ -32,7 +32,7 @@ namespace Mews.Registrierkassen
                 requestBody: JsonConvert.SerializeObject(input)
             );
             var signatureResponse = JsonConvert.DeserializeObject<SignatureResponse>(responseBody);
-            return new SignerOutput(signatureResponse, input.Receipt);
+            return new SignerOutput(signatureResponse, input.QrData);
         }
 
         public CertificateInfo GetCertificateInfo()

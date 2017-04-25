@@ -1,6 +1,4 @@
-﻿using System;
-using System.Text;
-using Mews.Registrierkassen.Dto;
+﻿using Mews.Registrierkassen.Dto;
 using Newtonsoft.Json;
 
 namespace Mews.Registrierkassen.Signers.Dto
@@ -14,10 +12,10 @@ namespace Mews.Registrierkassen.Signers.Dto
             DataToBeSigned = dataToBeSigned;
         }
 
-        public ATrustSignerInput(string password, Receipt receipt)
-            : this(password, receipt.DataToBeSigned)
+        public ATrustSignerInput(string password, QrData qrData)
+            : this(password, qrData.ToString())
         {
-            Receipt = receipt;
+            QrData = qrData;
         }
 
         [JsonProperty("password")]
@@ -27,7 +25,6 @@ namespace Mews.Registrierkassen.Signers.Dto
         public string DataToBeSigned { get; }
 
         [JsonIgnore]
-        public Receipt Receipt { get; }
-
+        public QrData QrData { get; }
     }
 }

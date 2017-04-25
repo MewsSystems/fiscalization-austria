@@ -12,9 +12,9 @@ namespace Mews.Registrierkassen.Dto
         public string Algorithm { get; set; }
 
         [JsonIgnore]
-        public Base64UrlSafeString Signature
+        public JwsSignature Signature
         {
-            get { return new Base64UrlSafeString(JwsRepresentation.Split('.')[2]); }
+            get { return new JwsSignature(JwsRepresentation.Split('.')[2]); }
         }
     }
 }

@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
-using Albireo.Base32;
 using Mews.Registrierkassen.Dto.Identifiers;
 using Org.BouncyCastle.Crypto.Parameters;
 using Org.BouncyCastle.Security;
@@ -29,43 +27,10 @@ namespace Mews.Registrierkassen.Dto
             CertificateSerialNumber = certificateSerialNumber ?? throw new ArgumentException("The certificate serial number has to be specified.");
             PreviousJwsRepresentation = previousJwsRepresentation;
             Created = created ?? LocalDateTime.Now;
-            Suite = "R1-AT100";
+            Suite = "R1-AT1";
             Key = key;
-
-            var chainValue = ComputeChainValue();
-            var encryptedTurnoverBase64 = ComputeTurnoverBase64();
-            var encryptedTurnoverBase32 = Base32.Encode(Convert.FromBase64String(encryptedTurnoverBase64));
-            var previousSignatureBase32 = Base32.Encode(Convert.FromBase64String(chainValue));
-
-            var commonItems = new List<string>()
-            {
-                Suite,
-                RegisterIdentifier.Value,
-                Number.Value,
-                FormatDate(Created),
-                FormatDecimal(TaxData.StandardRate.Value),
-                FormatDecimal(TaxData.ReducedRate.Value),
-                FormatDecimal(TaxData.LowerReducedRate.Value),
-                FormatDecimal(TaxData.ZeroRate.Value),
-                FormatDecimal(TaxData.SpecialRate.Value),
-            };
-
-            var dataToBeSignedItems = new List<string>
-            {
-                encryptedTurnoverBase64,
-                certificateSerialNumber.Value,
-                chainValue
-            };
-
-            var ocrDataItems = new List<string>
-            {
-                encryptedTurnoverBase32,
-                certificateSerialNumber.Value,
-                previousSignatureBase32
-            };
-
-            DataToBeSigned = $"_{String.Join("_", commonItems.Concat(dataToBeSignedItems))}";
-            OcrDataWithoutSignature = $"_{String.Join("_", commonItems.Concat(ocrDataItems))}";
+            ChainValue = ComputeChainValue();
+            EncryptedTurnover = EncryptTurnover();
         }
 
         public ReceiptNumber Number { get; }
@@ -82,38 +47,33 @@ namespace Mews.Registrierkassen.Dto
 
         public JwsRepresentation PreviousJwsRepresentation { get; }
 
-        public string DataToBeSigned { get; }
+        public ChainValue ChainValue { get; }
 
-        public string OcrDataWithoutSignature { get; }
-
-        public string QrDataWithoutSignature
-        {
-            get { return DataToBeSigned; }
-        }
-
+        public EncryptedTurnover EncryptedTurnover { get; }
+        
         public string Suite { get; }
 
         private byte[] Key { get; }
 
-        private string ComputeTurnoverBase64()
+        private EncryptedTurnover EncryptTurnover()
         {
             var sum = TaxData.Sum();
             var counter = (Turnover.Value + sum) * 100;
             var registryReceiptId = RegisterIdentifier.Value + Number.Value;
-            var ivBytes = Encoding.UTF8.GetBytes(registryReceiptId);
-            var registryReceiptIdHash = Sha256(ivBytes);
+            var initializationVectorBytes = Encoding.UTF8.GetBytes(registryReceiptId);
+            var registryReceiptIdHash = Sha256(initializationVectorBytes);
             var encryptedValue = AesCtr(registryReceiptIdHash, (long) counter, Key);
 
-            return Convert.ToBase64String(encryptedValue);
+            return new EncryptedTurnover(encryptedValue);
         }
 
         private byte[] AesCtr(byte[] hash, long value, byte[] key)
         {
-            var iv = GetEncryptInitializationVector(hash);
+            var initializationVector = GetEncryptInitializationVector(hash);
             var valueBytes = GetValueBytes(value);
 
             var cipher = CipherUtilities.GetCipher("AES/CTR/NoPadding");
-            cipher.Init(forEncryption: true, parameters: new ParametersWithIV(new KeyParameter(key), iv));
+            cipher.Init(forEncryption: true, parameters: new ParametersWithIV(new KeyParameter(key), initializationVector));
             cipher.ProcessBytes(valueBytes);
             return cipher.DoFinal();
         }
@@ -131,24 +91,11 @@ namespace Mews.Registrierkassen.Dto
             return orderedBytes.ToArray();
         }
 
-        private string ComputeChainValue()
+        private ChainValue ComputeChainValue()
         {
             var input = PreviousJwsRepresentation?.Value ?? RegisterIdentifier.Value;
             var hash = Sha256(Encoding.UTF8.GetBytes(input));
-            return Convert.ToBase64String(hash.Take(8).ToArray());
-        }
-
-        private string FormatDate(LocalDateTime localDateTime)
-        {
-            var dateTimeUtc = TimeZoneInfo.ConvertTimeToUtc(localDateTime.DateTime, localDateTime.TimeZoneInfo);
-            var dateTimeAustria = TimeZoneInfo.ConvertTimeFromUtc(dateTimeUtc, LocalDateTime.AustrianTimezone);
-            var date = DateTime.SpecifyKind(new DateTime(dateTimeAustria.Ticks - dateTimeAustria.Ticks % TimeSpan.TicksPerSecond), DateTimeKind.Local);
-            return date.ToString("yyyy-MM-ddTHH:mm:ss");
-        }
-
-        private string FormatDecimal(decimal amount)
-        {
-            return String.Format(System.Globalization.CultureInfo.GetCultureInfo("de-AT"), "{0:F2}", amount);
+            return new ChainValue(hash.Take(8).ToArray());
         }
 
         private byte[] Sha256(byte[] toBeHashed)

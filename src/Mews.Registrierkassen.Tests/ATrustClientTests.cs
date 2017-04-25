@@ -19,7 +19,7 @@ namespace Mews.Registrierkassen.Tests
             var client = new ATrustClient(Credentials, ATrustEnvironment.Test);
             var result = client.Sign(new ATrustSignerInput(
                 Credentials.Password,
-                receipt: new Receipt(
+                new QrData(new Receipt(
                     number: new ReceiptNumber("83469"),
                     registerIdentifier: new RegisterIdentifier("DEMO-CASH-BOX817"),
                     taxData: new TaxData(
@@ -36,7 +36,7 @@ namespace Mews.Registrierkassen.Tests
                         LocalDateTime.AustrianTimezone
                     )
                 )
-            ));
+            )));
             Assert.NotNull(result);
         }
 

@@ -1,26 +1,18 @@
-﻿using System;
-using System.Text;
-using Mews.Registrierkassen.Dto.Identifiers;
-
-namespace Mews.Registrierkassen.Dto
+﻿namespace Mews.Registrierkassen.Dto
 {
     public sealed class SignerOutput
     {
-        public SignerOutput(SignatureResponse response, Receipt receipt = null)
+        public SignerOutput(SignatureResponse response, QrData qrData = null)
         {
             SignatureResponse = response;
-            if (receipt != null)
+            if (qrData != null)
             {
-                var base64SignatureUrlUnsafe = response.Signature.Base64UrlUnsafeString;
-                QrCodeRepresentationWithSignature = $"{receipt.QrDataWithoutSignature}_{base64SignatureUrlUnsafe.Value}";
-                OcrCodeRepresentationWithSignature = $"{receipt.OcrDataWithoutSignature}_{base64SignatureUrlUnsafe.Value}";
+                SignedQrData = new SignedData<QrData>(qrData, response.Signature);
             }
         }
 
         public SignatureResponse SignatureResponse { get; }
 
-        public string QrCodeRepresentationWithSignature { get; }
-
-        public string OcrCodeRepresentationWithSignature { get; }
+        public SignedData<QrData> SignedQrData { get; }
     }
 }
