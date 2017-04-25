@@ -7,12 +7,12 @@
             SignatureResponse = response;
             if (qrData != null)
             {
-                SignedQrData = new SignedData<QrData>(qrData, response.Signature);
+                SignedQrData = new SignedQrData(qrData, response.Signature);
             }
         }
 
         public SignatureResponse SignatureResponse { get; }
 
-        public SignedData<QrData> SignedQrData { get; }
+        public SignedQrData SignedQrData { get; }
     }
 }

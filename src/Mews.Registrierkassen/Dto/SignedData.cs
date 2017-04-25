@@ -2,17 +2,16 @@
 
 namespace Mews.Registrierkassen.Dto
 {
-    public class SignedData<T>
-        where T : MachineReadableData
+    public class SignedQrData
     {
-        public SignedData(T data, JwsSignature signature)
+        public SignedQrData(QrData data, JwsSignature signature)
         {
             Data = data;
             Signature = signature;
             Value = ComputeValue();
         }
 
-        public T Data { get; }
+        public QrData Data { get; }
 
         public JwsSignature Signature { get; }
 
