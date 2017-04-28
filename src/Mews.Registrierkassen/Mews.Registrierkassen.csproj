@@ -1,0 +1,99 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{620047B3-835E-4A34-B148-A5A097769F45}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Mews.Registrierkassen</RootNamespace>
+    <AssemblyName>Mews.Registrierkassen</AssemblyName>
+    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <LangVersion>7</LangVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Albireo.Base32, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Albireo.Base32.1.0.1.0\lib\portable-net40+sl50+wp80+win\Albireo.Base32.dll</HintPath>
+    </Reference>
+    <Reference Include="BouncyCastle.Crypto, Version=1.8.1.0, Culture=neutral, PublicKeyToken=0e99375e54769942">
+      <HintPath>..\packages\BouncyCastle.1.8.1\lib\BouncyCastle.Crypto.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ATrustEnvironment.cs" />
+    <Compile Include="Dto\ByteValue.cs" />
+    <Compile Include="Dto\EncryptedTurnover.cs" />
+    <Compile Include="Dto\ChainValue.cs" />
+    <Compile Include="Dto\Identifiers\JwsSignature.cs" />
+    <Compile Include="Dto\CertificateInfo.cs" />
+    <Compile Include="Dto\CurrencyValue.cs" />
+    <Compile Include="Dto\LocalDateTime.cs" />
+    <Compile Include="Dto\Identifiers\CertificateSerialNumber.cs" />
+    <Compile Include="Dto\Identifiers\EndpointUrl.cs" />
+    <Compile Include="Dto\Identifiers\ReceiptNumber.cs" />
+    <Compile Include="Dto\Identifiers\Identifier.cs" />
+    <Compile Include="Dto\Identifiers\IntIdentifier.cs" />
+    <Compile Include="Dto\Identifiers\RegisterIdentifier.cs" />
+    <Compile Include="Dto\Identifiers\StringIdentifier.cs" />
+    <Compile Include="Dto\Identifiers\ATrustUserIdentifier.cs" />
+    <Compile Include="Dto\JwsRepresentation.cs" />
+    <Compile Include="Dto\ATrustCredentials.cs" />
+    <Compile Include="Dto\ATrustSignerInput.cs" />
+    <Compile Include="Dto\QrData.cs" />
+    <Compile Include="Dto\SignedData.cs" />
+    <Compile Include="Dto\SignatureResponse.cs" />
+    <Compile Include="Dto\Receipt.cs" />
+    <Compile Include="Dto\SignerOutput.cs" />
+    <Compile Include="Dto\SimpleHttpClient.cs" />
+    <Compile Include="Dto\TaxData.cs" />
+    <Compile Include="AesKeyGenerator.cs" />
+    <Compile Include="ATrustClient.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="packages.config" />
+    <None Include="Mews.Registrierkassen.nuspec" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
