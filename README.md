@@ -1,1 +1,1 @@
-# registrierkassen
+# Registrierkassen
