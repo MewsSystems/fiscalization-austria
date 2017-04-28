@@ -3,7 +3,7 @@
 A client library using the A-Trust WS to sign QR data.
 
 ## Usage example
-```
+```csharp
 var client = new ATrustClient(Credentials, ATrustEnvironment.Test);
 var result = client.Sign(new ATrustSignerInput(
     Credentials.Password,
