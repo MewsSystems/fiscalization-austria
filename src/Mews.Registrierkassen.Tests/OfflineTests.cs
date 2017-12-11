@@ -11,7 +11,7 @@ namespace Mews.Registrierkassen.Tests
         [Fact]
         public void OfflineSignatureWorks()
         {
-            var certificate = new X509Certificate2("..\\..\\..\\..\\resource\\certificate\\mews-demo.pfx");
+            var certificate = new X509Certificate2("..\\..\\resource\\certificate\\mews-demo.pfx");
             var signer = new OfflineSigner(certificate);
             var result = signer.Sign(new QrData(new Receipt(
                 number: new ReceiptNumber("83469"),

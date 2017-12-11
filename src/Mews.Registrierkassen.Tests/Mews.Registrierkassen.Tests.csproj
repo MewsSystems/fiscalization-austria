@@ -78,6 +78,7 @@
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
+    <None Include="resource\certificate\mews-demo.pfx" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Mews.RegistrierKassen\Mews.Registrierkassen.csproj">
