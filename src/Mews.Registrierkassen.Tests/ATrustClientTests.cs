@@ -6,7 +6,7 @@ using Xunit;
 
 namespace Mews.Registrierkassen.Tests
 {
-    public class Fact
+    public class ATrustClientTests
     {
         private static ATrustCredentials Credentials
         {
