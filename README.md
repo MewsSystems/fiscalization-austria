@@ -29,14 +29,20 @@ var qrData = new QrData(new Receipt(
 ### Using Offline signer
 ```csharp
 var signer = new OfflineSigner(certificate); // X509Certificate2 with ECDSA PK
-var result = signer.Sign(qrData);
+var output = signer.Sign(qrData);
 ```
 
 ### Using A-Trust RK.Online signer
 ```csharp
 var signer = new ATrustSigner(Credentials, ATrustEnvironment.Test);
-var signerInput = new ATrustSignerInput(Credentials.Password, qrData);
-var result = signer.Sign(signerInput));
+var output = signer.Sign(qrData);
+```
+
+### SignerOutput Usage
+```csharp
+fiscalRecord.JwsRepresentation = output.JwsRepresentation.Value;
+fiscalRecord.QrData = output.SignedQrData.Value;
+fiscalRecord.Signature = output.JwsRepresentation.Signature.Value;
 ```
 
 # NuGet
