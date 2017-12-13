@@ -8,7 +8,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Mews.Registrierkassen.Tests</RootNamespace>
     <AssemblyName>Mews.Registrierkassen.Tests</AssemblyName>
-    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
@@ -71,12 +71,16 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="OfflineTests.cs" />
     <Compile Include="ATrustClientTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
+    <None Include="resource\certificate\mews-demo.crt" />
+    <None Include="resource\certificate\mews-demo.key" />
+    <None Include="resource\certificate\mews-demo.pfx" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Mews.RegistrierKassen\Mews.Registrierkassen.csproj">
