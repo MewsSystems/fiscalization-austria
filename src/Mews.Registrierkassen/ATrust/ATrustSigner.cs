@@ -31,8 +31,8 @@ namespace Mews.Registrierkassen.ATrust
                 operation: "Sign/JWS",
                 requestBody: JsonConvert.SerializeObject(input)
             );
-            var signature = JsonConvert.DeserializeObject<ATrustSignerResponse>(responseBody);
-            return new SignerOutput(new JwsRepresentation(signature.JwsRepresentation), input.QrData);
+            var response = JsonConvert.DeserializeObject<ATrustSignerResponse>(responseBody);
+            return new SignerOutput(new JwsRepresentation(response.JwsRepresentation), input.QrData);
         }
 
         public CertificateInfo GetCertificateInfo()
