@@ -1,4 +1,4 @@
-﻿namespace Mews.Registrierkassen
+﻿namespace Mews.Registrierkassen.ATrust
 {
     public enum ATrustEnvironment
     {

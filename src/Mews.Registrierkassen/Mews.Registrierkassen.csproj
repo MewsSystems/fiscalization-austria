@@ -62,7 +62,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ATrustEnvironment.cs" />
+    <Compile Include="ATrust\ATrustEnvironment.cs" />
     <Compile Include="Dto\ByteValue.cs" />
     <Compile Include="Dto\EncryptedTurnover.cs" />
     <Compile Include="Dto\ChainValue.cs" />
@@ -71,27 +71,27 @@
     <Compile Include="Dto\CurrencyValue.cs" />
     <Compile Include="Dto\LocalDateTime.cs" />
     <Compile Include="Dto\Identifiers\CertificateSerialNumber.cs" />
-    <Compile Include="Dto\Identifiers\EndpointUrl.cs" />
+    <Compile Include="ATrust\EndpointUrl.cs" />
     <Compile Include="Dto\Identifiers\ReceiptNumber.cs" />
     <Compile Include="Dto\Identifiers\Identifier.cs" />
     <Compile Include="Dto\Identifiers\IntIdentifier.cs" />
     <Compile Include="Dto\Identifiers\RegisterIdentifier.cs" />
     <Compile Include="Dto\Identifiers\StringIdentifier.cs" />
-    <Compile Include="Dto\Identifiers\ATrustUserIdentifier.cs" />
-    <Compile Include="Dto\JwsRepresentation.cs" />
-    <Compile Include="Dto\ATrustCredentials.cs" />
-    <Compile Include="Dto\ATrustSignerInput.cs" />
+    <Compile Include="ATrust\ATrustUserIdentifier.cs" />
+    <Compile Include="Dto\Identifiers\JwsRepresentation.cs" />
+    <Compile Include="ATrust\ATrustCredentials.cs" />
+    <Compile Include="ATrust\ATrustSignerInput.cs" />
     <Compile Include="Dto\QrData.cs" />
     <Compile Include="Dto\SignedData.cs" />
-    <Compile Include="Dto\Signature.cs" />
+    <Compile Include="ATrust\ATrustSignerResponse.cs" />
     <Compile Include="Dto\Receipt.cs" />
     <Compile Include="Dto\SignerOutput.cs" />
-    <Compile Include="Dto\SimpleHttpClient.cs" />
+    <Compile Include="ATrust\SimpleHttpClient.cs" />
     <Compile Include="Dto\TaxData.cs" />
     <Compile Include="AesKeyGenerator.cs" />
-    <Compile Include="ATrustSigner.cs" />
+    <Compile Include="ATrust\ATrustSigner.cs" />
     <Compile Include="ISigner.cs" />
-    <Compile Include="OfflineSigner.cs" />
+    <Compile Include="Offline\OfflineSigner.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -99,6 +99,7 @@
     <None Include="packages.config" />
     <None Include="Mews.Registrierkassen.nuspec" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -1,9 +1,8 @@
 ﻿using System.IO;
 using System.Net;
 using System.Text;
-using Mews.Registrierkassen.Dto.Identifiers;
 
-namespace Mews.Registrierkassen.Dto
+namespace Mews.Registrierkassen.ATrust
 {
     public class SimpleHttpClient
     {
