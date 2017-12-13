@@ -6,7 +6,7 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace Mews.Registrierkassen
 {
-    public class OfflineSigner
+    public class OfflineSigner : ISigner
     {
         public OfflineSigner(X509Certificate2 certificate)
         {
@@ -25,8 +25,8 @@ namespace Mews.Registrierkassen
             var bytes = Certificate.GetECDsaPrivateKey().SignData(Encoding.UTF8.GetBytes(jwsDataToBeSigned), HashAlgorithmName.SHA256);
             var jwsSignatureBase64Url = Base64UrlEncoder.Encode(bytes);
 
-            var signerOutput = $"{jwsHeaderBase64Url}.{jwsPayloadBase64Url}.{jwsSignatureBase64Url}";
-            return new SignerOutput(new SignatureResponse { JwsRepresentation = signerOutput }, qrData);
+            var jwsRepresentation = $"{jwsHeaderBase64Url}.{jwsPayloadBase64Url}.{jwsSignatureBase64Url}";
+            return new SignerOutput(new Signature { JwsRepresentation = jwsRepresentation }, qrData);
         }
     }
 }

@@ -83,13 +83,14 @@
     <Compile Include="Dto\ATrustSignerInput.cs" />
     <Compile Include="Dto\QrData.cs" />
     <Compile Include="Dto\SignedData.cs" />
-    <Compile Include="Dto\SignatureResponse.cs" />
+    <Compile Include="Dto\Signature.cs" />
     <Compile Include="Dto\Receipt.cs" />
     <Compile Include="Dto\SignerOutput.cs" />
     <Compile Include="Dto\SimpleHttpClient.cs" />
     <Compile Include="Dto\TaxData.cs" />
     <Compile Include="AesKeyGenerator.cs" />
     <Compile Include="ATrustSigner.cs" />
+    <Compile Include="ISigner.cs" />
     <Compile Include="OfflineSigner.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

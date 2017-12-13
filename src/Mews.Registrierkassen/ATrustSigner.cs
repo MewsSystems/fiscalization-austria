@@ -6,7 +6,7 @@ using Newtonsoft.Json;
 
 namespace Mews.Registrierkassen
 {
-    public sealed class ATrustSigner
+    public sealed class ATrustSigner : ISigner
     {
         static ATrustSigner()
         {
@@ -25,14 +25,15 @@ namespace Mews.Registrierkassen
 
         private SimpleHttpClient HttpClient { get; }
 
-        public SignerOutput Sign(ATrustSignerInput input)
+        public SignerOutput Sign(QrData qrData)
         {
+            var input = new ATrustSignerInput(Credentials.Password, qrData);
             var responseBody = HttpClient.PostJson(
                 operation: "Sign/JWS",
                 requestBody: JsonConvert.SerializeObject(input)
             );
-            var signatureResponse = JsonConvert.DeserializeObject<SignatureResponse>(responseBody);
-            return new SignerOutput(signatureResponse, input.QrData);
+            var signature = JsonConvert.DeserializeObject<Signature>(responseBody);
+            return new SignerOutput(signature, input.QrData);
         }
 
         public CertificateInfo GetCertificateInfo()

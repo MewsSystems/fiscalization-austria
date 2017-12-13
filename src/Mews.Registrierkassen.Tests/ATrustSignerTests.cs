@@ -17,9 +17,7 @@ namespace Mews.Registrierkassen.Tests
         public void ATrustSignerWorks()
         {
             var signer = new ATrustSigner(Credentials, ATrustEnvironment.Test);
-            var result = signer.Sign(new ATrustSignerInput(
-                Credentials.Password,
-                new QrData(new Receipt(
+            var result = signer.Sign(new QrData(new Receipt(
                     number: new ReceiptNumber("83469"),
                     registerIdentifier: new RegisterIdentifier("DEMO-CASH-BOX817"),
                     taxData: new TaxData(
@@ -36,7 +34,7 @@ namespace Mews.Registrierkassen.Tests
                         LocalDateTime.AustrianTimezone
                     )
                 )
-            )));
+            ));
             Assert.NotNull(result);
         }
 

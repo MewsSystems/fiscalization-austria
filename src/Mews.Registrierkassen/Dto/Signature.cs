@@ -3,7 +3,7 @@ using Newtonsoft.Json;
 
 namespace Mews.Registrierkassen.Dto
 {
-    public sealed class SignatureResponse
+    public sealed class Signature
     {
         [JsonProperty("result")]
         public string JwsRepresentation { get; set; }
@@ -12,7 +12,7 @@ namespace Mews.Registrierkassen.Dto
         public string Algorithm { get; set; }
 
         [JsonIgnore]
-        public JwsSignature Signature
+        public JwsSignature Value
         {
             get { return new JwsSignature(JwsRepresentation.Split('.')[2]); }
         }

@@ -2,16 +2,16 @@
 {
     public sealed class SignerOutput
     {
-        public SignerOutput(SignatureResponse response, QrData qrData = null)
+        public SignerOutput(Signature signature, QrData qrData = null)
         {
-            SignatureResponse = response;
+            Signature = signature;
             if (qrData != null)
             {
-                SignedQrData = new SignedQrData(qrData, response.Signature);
+                SignedQrData = new SignedQrData(qrData, signature.Value);
             }
         }
 
-        public SignatureResponse SignatureResponse { get; }
+        public Signature Signature { get; }
 
         public SignedQrData SignedQrData { get; }
     }
