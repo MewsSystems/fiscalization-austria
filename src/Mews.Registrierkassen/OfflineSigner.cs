@@ -1,6 +1,8 @@
-﻿using System.Security.Cryptography.X509Certificates;
-using Jose;
+﻿using System.Security.Cryptography;
+using System.Security.Cryptography.X509Certificates;
+using System.Text;
 using Mews.Registrierkassen.Dto;
+using Microsoft.IdentityModel.Tokens;
 
 namespace Mews.Registrierkassen
 {
@@ -15,12 +17,16 @@ namespace Mews.Registrierkassen
 
         public SignerOutput Sign(QrData qrData)
         {
-            var jwsRepresentation = JWT.Encode(
-                qrData.Value,
-                Certificate.GetECDsaPrivateKey(),
-                JwsAlgorithm.ES256
-            );
-            return new SignerOutput(new SignatureResponse { JwsRepresentation = jwsRepresentation }, qrData);
+            //// This is a manual JWS implementation as RKSV does not use standard signature format. Do not migrate to jose-jwt
+            var jwsHeaderBase64Url = "eyJhbGciOiJFUzI1NiJ9"; // Fixed value for RKSV
+            var jwsPayloadBase64Url = Base64UrlEncoder.Encode(qrData.Value);
+            var jwsDataToBeSigned = jwsHeaderBase64Url + "." + jwsPayloadBase64Url;
+
+            var bytes = Certificate.GetECDsaPrivateKey().SignData(Encoding.UTF8.GetBytes(jwsDataToBeSigned), HashAlgorithmName.SHA256);
+            var jwsSignatureBase64Url = Base64UrlEncoder.Encode(bytes);
+
+            var signerOutput = jwsHeaderBase64Url + "." + jwsPayloadBase64Url + "." + jwsSignatureBase64Url;
+            return new SignerOutput(new SignatureResponse { JwsRepresentation = signerOutput }, qrData);
         }
     }
 }

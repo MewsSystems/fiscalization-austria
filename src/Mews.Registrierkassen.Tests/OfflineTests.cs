@@ -22,7 +22,7 @@ namespace Mews.Registrierkassen.Tests
                     specialRate: new CurrencyValue(21.19m)
                 ),
                 turnover: new CurrencyValue(0.0m),
-                certificateSerialNumber: new CertificateSerialNumber("-3667961875706356849"),
+                certificateSerialNumber: new CertificateSerialNumber(certificate.SerialNumber),
                 previousJwsRepresentation: new JwsRepresentation("d3YUbS4CoRo="),
                 key: Convert.FromBase64String("RCsRmHn5tkLQrRpiZq2ucwPpwvHJLiMgLvwrwEImddI="),
                 created: new LocalDateTime(
