@@ -1,17 +1,19 @@
-﻿namespace Mews.Registrierkassen.Dto
+﻿using Mews.Registrierkassen.Dto.Identifiers;
+
+namespace Mews.Registrierkassen.Dto
 {
     public sealed class SignerOutput
     {
-        public SignerOutput(SignatureResponse response, QrData qrData = null)
+        public SignerOutput(JwsRepresentation jwsRepresentation, QrData qrData = null)
         {
-            SignatureResponse = response;
+            JwsRepresentation = jwsRepresentation;
             if (qrData != null)
             {
-                SignedQrData = new SignedQrData(qrData, response.Signature);
+                SignedQrData = new SignedQrData(qrData, jwsRepresentation.Signature);
             }
         }
 
-        public SignatureResponse SignatureResponse { get; }
+        public JwsRepresentation JwsRepresentation { get; }
 
         public SignedQrData SignedQrData { get; }
     }

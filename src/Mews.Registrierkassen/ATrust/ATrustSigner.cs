@@ -1,12 +1,11 @@
 ﻿using System.Net;
 using Mews.Registrierkassen.Dto;
 using Mews.Registrierkassen.Dto.Identifiers;
-using Mews.Registrierkassen.Signers.Dto;
 using Newtonsoft.Json;
 
-namespace Mews.Registrierkassen
+namespace Mews.Registrierkassen.ATrust
 {
-    public sealed class ATrustSigner
+    public sealed class ATrustSigner : ISigner
     {
         static ATrustSigner()
         {
@@ -25,14 +24,15 @@ namespace Mews.Registrierkassen
 
         private SimpleHttpClient HttpClient { get; }
 
-        public SignerOutput Sign(ATrustSignerInput input)
+        public SignerOutput Sign(QrData qrData)
         {
+            var input = new ATrustSignerInput(Credentials.Password, qrData);
             var responseBody = HttpClient.PostJson(
                 operation: "Sign/JWS",
                 requestBody: JsonConvert.SerializeObject(input)
             );
-            var signatureResponse = JsonConvert.DeserializeObject<SignatureResponse>(responseBody);
-            return new SignerOutput(signatureResponse, input.QrData);
+            var response = JsonConvert.DeserializeObject<ATrustSignerResponse>(responseBody);
+            return new SignerOutput(new JwsRepresentation(response.JwsRepresentation), input.QrData);
         }
 
         public CertificateInfo GetCertificateInfo()

@@ -1,15 +1,17 @@
 ﻿using System.Text.RegularExpressions;
-using Mews.Registrierkassen.Dto.Identifiers;
 
 namespace Mews.Registrierkassen.Dto.Identifiers
 {
-    public sealed class CertificateSerialNumber : StringIdentifier
+    public class JwsRepresentation : StringIdentifier
     {
         public static readonly Regex Pattern = new Regex(".+");
-
-        public CertificateSerialNumber(string value)
+    
+        public JwsRepresentation(string value)
             : base(value, Pattern)
         {
+            Signature = new JwsSignature(value.Split('.')[2]);
         }
+
+        public JwsSignature Signature { get; }
     }
 }

@@ -2,11 +2,12 @@
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using Mews.Registrierkassen.Dto;
+using Mews.Registrierkassen.Dto.Identifiers;
 using Microsoft.IdentityModel.Tokens;
 
-namespace Mews.Registrierkassen
+namespace Mews.Registrierkassen.Offline
 {
-    public class OfflineSigner
+    public class OfflineSigner : ISigner
     {
         public OfflineSigner(X509Certificate2 certificate)
         {
@@ -25,8 +26,8 @@ namespace Mews.Registrierkassen
             var bytes = Certificate.GetECDsaPrivateKey().SignData(Encoding.UTF8.GetBytes(jwsDataToBeSigned), HashAlgorithmName.SHA256);
             var jwsSignatureBase64Url = Base64UrlEncoder.Encode(bytes);
 
-            var signerOutput = $"{jwsHeaderBase64Url}.{jwsPayloadBase64Url}.{jwsSignatureBase64Url}";
-            return new SignerOutput(new SignatureResponse { JwsRepresentation = signerOutput }, qrData);
+            var jwsRepresentation = $"{jwsHeaderBase64Url}.{jwsPayloadBase64Url}.{jwsSignatureBase64Url}";
+            return new SignerOutput(new JwsRepresentation(jwsRepresentation), qrData);
         }
     }
 }

@@ -1,7 +1,7 @@
 ﻿using Mews.Registrierkassen.Dto;
 using Newtonsoft.Json;
 
-namespace Mews.Registrierkassen.Signers.Dto
+namespace Mews.Registrierkassen.ATrust
 {
     public sealed class ATrustSignerInput
     {
