@@ -18,14 +18,14 @@ namespace Mews.Registrierkassen
         public SignerOutput Sign(QrData qrData)
         {
             //// This is a manual JWS implementation as RKSV does not use standard signature format. Do not migrate to jose-jwt
-            var jwsHeaderBase64Url = "eyJhbGciOiJFUzI1NiJ9"; // Fixed value for RKSV
+            var jwsHeaderBase64Url = Base64UrlEncoder.Encode("{\"alg\":\"ES256\"}"); // Fixed value for RKSV
             var jwsPayloadBase64Url = Base64UrlEncoder.Encode(qrData.Value);
             var jwsDataToBeSigned = jwsHeaderBase64Url + "." + jwsPayloadBase64Url;
 
             var bytes = Certificate.GetECDsaPrivateKey().SignData(Encoding.UTF8.GetBytes(jwsDataToBeSigned), HashAlgorithmName.SHA256);
             var jwsSignatureBase64Url = Base64UrlEncoder.Encode(bytes);
 
-            var signerOutput = jwsHeaderBase64Url + "." + jwsPayloadBase64Url + "." + jwsSignatureBase64Url;
+            var signerOutput = $"{jwsHeaderBase64Url}.{jwsPayloadBase64Url}.{jwsSignatureBase64Url}";
             return new SignerOutput(new SignatureResponse { JwsRepresentation = signerOutput }, qrData);
         }
     }

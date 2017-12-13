@@ -26,7 +26,7 @@ namespace Mews.Registrierkassen.Tests
                 previousJwsRepresentation: new JwsRepresentation("d3YUbS4CoRo="),
                 key: Convert.FromBase64String("RCsRmHn5tkLQrRpiZq2ucwPpwvHJLiMgLvwrwEImddI="),
                 created: new LocalDateTime(
-                    new DateTime(2015, 11, 25, 19, 20, 11),
+                    new DateTime(year: 2015, month: 11, day: 25, hour: 19, minute: 20, second: 11),
                     LocalDateTime.AustrianTimezone
                 )
             )));
