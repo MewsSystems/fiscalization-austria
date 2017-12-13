@@ -6,14 +6,14 @@ using Newtonsoft.Json;
 
 namespace Mews.Registrierkassen
 {
-    public sealed class ATrustClient
+    public sealed class ATrustSigner
     {
-        static ATrustClient()
+        static ATrustSigner()
         {
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12 | SecurityProtocolType.Tls11;
         }
 
-        public ATrustClient(ATrustCredentials credentials, ATrustEnvironment environment = ATrustEnvironment.Production)
+        public ATrustSigner(ATrustCredentials credentials, ATrustEnvironment environment = ATrustEnvironment.Production)
         {
             Credentials = credentials;
             var environmentDomain = environment == ATrustEnvironment.Production ? "www" : "hs-abnahme";

@@ -89,7 +89,7 @@
     <Compile Include="Dto\SimpleHttpClient.cs" />
     <Compile Include="Dto\TaxData.cs" />
     <Compile Include="AesKeyGenerator.cs" />
-    <Compile Include="ATrustClient.cs" />
+    <Compile Include="ATrustSigner.cs" />
     <Compile Include="OfflineSigner.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
