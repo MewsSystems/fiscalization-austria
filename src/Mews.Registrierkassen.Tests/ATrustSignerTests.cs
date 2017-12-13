@@ -6,7 +6,7 @@ using Xunit;
 
 namespace Mews.Registrierkassen.Tests
 {
-    public class ATrustClientTests
+    public class ATrustSignerTests
     {
         private static ATrustCredentials Credentials
         {
@@ -16,8 +16,8 @@ namespace Mews.Registrierkassen.Tests
         [Fact]
         public void ATrustSignerWorks()
         {
-            var client = new ATrustClient(Credentials, ATrustEnvironment.Test);
-            var result = client.Sign(new ATrustSignerInput(
+            var signer = new ATrustSigner(Credentials, ATrustEnvironment.Test);
+            var result = signer.Sign(new ATrustSignerInput(
                 Credentials.Password,
                 new QrData(new Receipt(
                     number: new ReceiptNumber("83469"),
@@ -43,7 +43,7 @@ namespace Mews.Registrierkassen.Tests
         [Fact]
         public void GetCertificateInfoWorks()
         {
-            var info = new ATrustClient(Credentials, ATrustEnvironment.Test).GetCertificateInfo();
+            var info = new ATrustSigner(Credentials, ATrustEnvironment.Test).GetCertificateInfo();
             Assert.NotNull(info);
         }
     }
