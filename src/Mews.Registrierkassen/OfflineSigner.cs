@@ -13,7 +13,7 @@ namespace Mews.Registrierkassen
             Certificate = certificate;
         }
 
-        public X509Certificate2 Certificate { get; set; }
+        public X509Certificate2 Certificate { get; }
 
         public SignerOutput Sign(QrData qrData)
         {
