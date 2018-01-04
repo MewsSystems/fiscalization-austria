@@ -2,7 +2,7 @@
 
 namespace Mews.Registrierkassen
 {
-    interface ISigner
+    public interface ISigner
     {
         SignerOutput Sign(QrData qrData);
     }
