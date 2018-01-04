@@ -17,8 +17,7 @@ var qrData = new QrData(new Receipt(
     ),
     turnover: new CurrencyValue(0.0m), 
     certificateSerialNumber: new CertificateSerialNumber("-3667961875706356849"),
-    previousJwsRepresentation: new JwsRepresentation("d3YUbS4CoRo="), 
-    key: Convert.FromBase64String("RCsRmHn5tkLQrRpiZq2ucwPpwvHJLiMgLvwrwEImddI="),
+    previousJwsRepresentation: new JwsRepresentation("..."),
     created: new LocalDateTime(
         new DateTime(2015, 11, 25, 19, 20, 11),
         LocalDateTime.AustrianTimezone
@@ -29,14 +28,20 @@ var qrData = new QrData(new Receipt(
 ### Using Offline signer
 ```csharp
 var signer = new OfflineSigner(certificate); // X509Certificate2 with ECDSA PK
-var result = signer.Sign(qrData);
+var output = signer.Sign(qrData);
 ```
 
 ### Using A-Trust RK.Online signer
 ```csharp
 var signer = new ATrustSigner(Credentials, ATrustEnvironment.Test);
-var signerInput = new ATrustSignerInput(Credentials.Password, qrData);
-var result = signer.Sign(signerInput));
+var output = signer.Sign(qrData);
+```
+
+### SignerOutput Usage
+```csharp
+fiscalRecord.JwsRepresentation = output.JwsRepresentation.Value;
+fiscalRecord.QrData = output.SignedQrData.Value;
+fiscalRecord.Signature = output.JwsRepresentation.Signature.Value;
 ```
 
 # NuGet
