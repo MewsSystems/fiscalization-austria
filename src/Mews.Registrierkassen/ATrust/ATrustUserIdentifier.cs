@@ -1,5 +1,5 @@
 ﻿using System.Text.RegularExpressions;
-using Mews.Registrierkassen.Dto.Identifiers;
+using Mews.FiscalChaining.Dto.Identifiers;
 
 namespace Mews.Registrierkassen.ATrust
 {

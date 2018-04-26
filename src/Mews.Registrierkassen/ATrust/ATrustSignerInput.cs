@@ -1,4 +1,4 @@
-﻿using Mews.Registrierkassen.Dto;
+﻿using Mews.FiscalChaining.Dto;
 using Newtonsoft.Json;
 
 namespace Mews.Registrierkassen.ATrust

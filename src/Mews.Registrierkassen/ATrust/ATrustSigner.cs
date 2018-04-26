@@ -1,7 +1,8 @@
 ﻿using System.Net;
-using Mews.Registrierkassen.Dto;
-using Mews.Registrierkassen.Dto.Identifiers;
+using Mews.FiscalChaining.Dto;
+using Mews.FiscalChaining.Dto.Identifiers;
 using Newtonsoft.Json;
+using Mews.FiscalChaining;
 
 namespace Mews.Registrierkassen.ATrust
 {

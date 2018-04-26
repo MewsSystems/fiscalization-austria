@@ -1,7 +1,7 @@
 ﻿using System;
+using Mews.FiscalChaining.Dto;
+using Mews.FiscalChaining.Dto.Identifiers;
 using Mews.Registrierkassen.ATrust;
-using Mews.Registrierkassen.Dto;
-using Mews.Registrierkassen.Dto.Identifiers;
 using Xunit;
 
 namespace Mews.Registrierkassen.Tests

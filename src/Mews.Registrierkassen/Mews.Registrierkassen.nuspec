@@ -2,17 +2,17 @@
 <package>
   <metadata>
     <id>Mews.Registrierkassen</id>
-    <version>3.0.1</version>
+    <version>4.0.0</version>
     <title>$title$</title>
     <authors>Jiří Helmich</authors>
     <owners>Mews Systems</owners>
     <licenseUrl>https://github.com/MewsSystems/registrierkassen/blob/master/LICENSE</licenseUrl>
     <projectUrl>https://github.com/MewsSystems/registrierkassen</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <description>ISigner made public.</description>
+    <description>Parts of the library moved to Mews.FiscalChaining.</description>
     <releaseNotes>
     </releaseNotes>
-    <copyright>Copyright 2017</copyright>
+    <copyright>Copyright 2018</copyright>
     <tags>Registrierkassen Fiscal</tags>
   </metadata>
 </package>
