@@ -2,7 +2,7 @@
 <package>
   <metadata>
     <id>Mews.Registrierkassen</id>
-    <version>4.0.1</version>
+    <version>$version$</version>
     <title>$title$</title>
     <authors>Jiří Helmich</authors>
     <owners>Mews Systems</owners>
