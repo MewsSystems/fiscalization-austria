@@ -9,7 +9,7 @@
     <licenseUrl>https://github.com/MewsSystems/registrierkassen/blob/master/LICENSE</licenseUrl>
     <projectUrl>https://github.com/MewsSystems/registrierkassen</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <description>Mews.FiscalChaining dependency has been updated.</description>
+    <description>Mews.FiscalChaining dependency has been removed.</description>
     <releaseNotes>
     </releaseNotes>
     <copyright>Copyright 2018</copyright>
