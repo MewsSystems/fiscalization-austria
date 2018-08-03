@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Globalization;
-using Mews.FiscalChaining.Dto;
-using Mews.FiscalChaining.Dto.Identifiers;
+using Mews.Registrierkassen.Dto;
+using Mews.Registrierkassen.Dto.Identifiers;
 using Mews.Registrierkassen.ATrust;
 using Xunit;
 
