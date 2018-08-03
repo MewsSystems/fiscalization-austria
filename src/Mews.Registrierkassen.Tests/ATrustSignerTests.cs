@@ -1,7 +1,8 @@
 ﻿using System;
-using Mews.Registrierkassen.ATrust;
+using System.Globalization;
 using Mews.Registrierkassen.Dto;
 using Mews.Registrierkassen.Dto.Identifiers;
+using Mews.Registrierkassen.ATrust;
 using Xunit;
 
 namespace Mews.Registrierkassen.Tests
@@ -16,6 +17,8 @@ namespace Mews.Registrierkassen.Tests
         [Fact]
         public void ATrustSignerWorks()
         {
+            var austrianTimeZone = TimeZoneInfo.FindSystemTimeZoneById("Central Europe Standard Time");
+            var austrianCulture = CultureInfo.GetCultureInfo("de-AT");
             var signer = new ATrustSigner(Credentials, ATrustEnvironment.Test);
             var result = signer.Sign(new QrData(new Receipt(
                     number: new ReceiptNumber("83469"),
@@ -31,9 +34,9 @@ namespace Mews.Registrierkassen.Tests
                     key: Convert.FromBase64String("RCsRmHn5tkLQrRpiZq2ucwPpwvHJLiMgLvwrwEImddI="),
                     created: new LocalDateTime(
                         new DateTime(2015, 11, 25, 19, 20, 11),
-                        LocalDateTime.AustrianTimezone
+                        austrianTimeZone
                     )
-                )
+                ), austrianCulture, austrianTimeZone
             ));
             Assert.NotNull(result);
         }

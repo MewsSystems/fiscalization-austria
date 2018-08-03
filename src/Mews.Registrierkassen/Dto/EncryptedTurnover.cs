@@ -6,5 +6,10 @@ namespace Mews.Registrierkassen.Dto
             : base(value)
         {
         }
+
+        public EncryptedTurnover(string base64Value)
+            : base(base64Value)
+        {
+        }
     }
 }

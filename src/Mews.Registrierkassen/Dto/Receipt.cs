@@ -19,18 +19,44 @@ namespace Mews.Registrierkassen.Dto
             JwsRepresentation previousJwsRepresentation,
             byte[] key,
             LocalDateTime created = null)
+            : this(number, registerIdentifier, taxData, certificateSerialNumber, key, created)
+        {
+            PreviousJwsRepresentation = previousJwsRepresentation;
+            ChainValue = ComputeChainValue();
+            Turnover = turnover ?? throw new ArgumentException("The turnover has to be specified.");
+            EncryptedTurnover = EncryptTurnover();
+        }
+
+        public Receipt(
+            ReceiptNumber number,
+            RegisterIdentifier registerIdentifier,
+            TaxData taxData,
+            EncryptedTurnover encryptedTurnover,
+            CertificateSerialNumber certificateSerialNumber,
+            ChainValue chainValue,
+            byte[] key,
+            LocalDateTime created = null)
+            : this(number, registerIdentifier, taxData, certificateSerialNumber, key, created)
+        {
+            EncryptedTurnover = encryptedTurnover;
+            Turnover = DecryptTurnover();
+            ChainValue = chainValue;
+        }
+
+        private Receipt(ReceiptNumber number,
+            RegisterIdentifier registerIdentifier,
+            TaxData taxData,
+            CertificateSerialNumber certificateSerialNumber,
+            byte[] key,
+            LocalDateTime created = null)
         {
             Number = number ?? throw new ArgumentException("The receipt number has to be specified.");
             RegisterIdentifier = registerIdentifier ?? throw new ArgumentException("The register identifier has to be specified.");
             TaxData = taxData ?? throw new ArgumentException("The tax data have to be specified.");
-            Turnover = turnover ?? throw new ArgumentException("The turnover has to be specified.");
             CertificateSerialNumber = certificateSerialNumber ?? throw new ArgumentException("The certificate serial number has to be specified.");
-            PreviousJwsRepresentation = previousJwsRepresentation;
             Created = created ?? LocalDateTime.Now;
             Suite = "R1-AT1";
             Key = key;
-            ChainValue = ComputeChainValue();
-            EncryptedTurnover = EncryptTurnover();
         }
 
         public ReceiptNumber Number { get; }
@@ -50,7 +76,7 @@ namespace Mews.Registrierkassen.Dto
         public ChainValue ChainValue { get; }
 
         public EncryptedTurnover EncryptedTurnover { get; }
-        
+
         public string Suite { get; }
 
         private byte[] Key { get; }
@@ -59,22 +85,30 @@ namespace Mews.Registrierkassen.Dto
         {
             var sum = TaxData.Sum();
             var counter = (Turnover.Value + sum) * 100;
-            var registryReceiptId = RegisterIdentifier.Value + Number.Value;
-            var initializationVectorBytes = Encoding.UTF8.GetBytes(registryReceiptId);
-            var registryReceiptIdHash = Sha256(initializationVectorBytes);
-            var encryptedValue = AesCtr(registryReceiptIdHash, (long) counter, Key);
+            var valueBytes = GetValueBytes((long)counter);
+            var encryptedValue = AesCtr(valueBytes, encrypt: true);
 
             return new EncryptedTurnover(encryptedValue);
         }
 
-        private byte[] AesCtr(byte[] hash, long value, byte[] key)
+        private CurrencyValue DecryptTurnover()
         {
-            var initializationVector = GetEncryptInitializationVector(hash);
-            var valueBytes = GetValueBytes(value);
+            var valueBytes = AesCtr(EncryptedTurnover.Value, encrypt: false);
+            var decryptedValue = GetValuesFromBytes(valueBytes);
+
+            return new CurrencyValue(decryptedValue / 100m);
+        }
+
+        private byte[] AesCtr(byte[] value, bool encrypt)
+        {
+            var registryReceiptId = RegisterIdentifier.Value + Number.Value;
+            var initializationVectorBytes = Encoding.UTF8.GetBytes(registryReceiptId);
+            var registryReceiptIdHash = Sha256(initializationVectorBytes);
+            var initializationVector = GetEncryptInitializationVector(registryReceiptIdHash);
 
             var cipher = CipherUtilities.GetCipher("AES/CTR/NoPadding");
-            cipher.Init(forEncryption: true, parameters: new ParametersWithIV(new KeyParameter(key), initializationVector));
-            cipher.ProcessBytes(valueBytes);
+            cipher.Init(forEncryption: encrypt, parameters: new ParametersWithIV(new KeyParameter(Key), initializationVector));
+            cipher.ProcessBytes(value);
             return cipher.DoFinal();
         }
 
@@ -89,6 +123,12 @@ namespace Mews.Registrierkassen.Dto
             var bytesSubset = originalBytes.Take(8);
             var orderedBytes = BitConverter.IsLittleEndian ? bytesSubset.Reverse() : bytesSubset;
             return orderedBytes.ToArray();
+        }
+
+        private long GetValuesFromBytes(byte[] bytes)
+        {
+            var orderedBytes = BitConverter.IsLittleEndian ? bytes.Reverse() : bytes;
+            return BitConverter.ToInt64(orderedBytes.ToArray(), startIndex: 0);
         }
 
         private ChainValue ComputeChainValue()

@@ -2,6 +2,7 @@
 using Mews.Registrierkassen.Dto;
 using Mews.Registrierkassen.Dto.Identifiers;
 using Newtonsoft.Json;
+using Mews.Registrierkassen;
 
 namespace Mews.Registrierkassen.ATrust
 {

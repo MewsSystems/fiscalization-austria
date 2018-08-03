@@ -9,6 +9,11 @@ namespace Mews.Registrierkassen.Dto
             Value = value;
         }
 
+        public ByteValue(string base64Value)
+        {
+            Value = Convert.FromBase64String(base64Value);
+        }
+
         public byte[] Value { get; }
 
         public string ToBase64String()

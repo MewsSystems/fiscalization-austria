@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 
 namespace Mews.Registrierkassen.Dto
 {
@@ -22,6 +23,11 @@ namespace Mews.Registrierkassen.Dto
 
         public decimal Value { get; }
 
+        public string FormatValue(CultureInfo culture)
+        {
+            return String.Format(culture, "{0:F2}", Value);
+        }
+
         private decimal EnsureMinimalPrecision(decimal value, int placesCount)
         {
             switch (placesCount)
@@ -33,6 +39,15 @@ namespace Mews.Registrierkassen.Dto
                 default:
                     return value;
             }
+        }
+
+        public static CurrencyValue Parse(string value, CultureInfo culture)
+        {
+            if (Decimal.TryParse(value, NumberStyles.Any, culture, out decimal val))
+            {
+                return new CurrencyValue(val);
+            }
+            throw new ArgumentException($"Value '{value}' is not a valid CurrencyValue.");
         }
     }
 }

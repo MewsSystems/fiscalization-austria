@@ -32,9 +32,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Albireo.Base32, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Albireo.Base32.1.0.1.0\lib\portable-net40+sl50+wp80+win\Albireo.Base32.dll</HintPath>
-    </Reference>
     <Reference Include="BouncyCastle.Crypto, Version=1.8.1.0, Culture=neutral, PublicKeyToken=0e99375e54769942">
       <HintPath>..\packages\BouncyCastle.1.8.1\lib\BouncyCastle.Crypto.dll</HintPath>
     </Reference>
@@ -62,34 +59,34 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AesKeyGenerator.cs" />
     <Compile Include="ATrust\ATrustEnvironment.cs" />
-    <Compile Include="Dto\ByteValue.cs" />
-    <Compile Include="Dto\EncryptedTurnover.cs" />
-    <Compile Include="Dto\ChainValue.cs" />
-    <Compile Include="Dto\Identifiers\JwsSignature.cs" />
-    <Compile Include="Dto\CertificateInfo.cs" />
-    <Compile Include="Dto\CurrencyValue.cs" />
-    <Compile Include="Dto\LocalDateTime.cs" />
-    <Compile Include="Dto\Identifiers\CertificateSerialNumber.cs" />
     <Compile Include="ATrust\EndpointUrl.cs" />
-    <Compile Include="Dto\Identifiers\ReceiptNumber.cs" />
-    <Compile Include="Dto\Identifiers\Identifier.cs" />
-    <Compile Include="Dto\Identifiers\IntIdentifier.cs" />
-    <Compile Include="Dto\Identifiers\RegisterIdentifier.cs" />
-    <Compile Include="Dto\Identifiers\StringIdentifier.cs" />
     <Compile Include="ATrust\ATrustUserIdentifier.cs" />
-    <Compile Include="Dto\Identifiers\JwsRepresentation.cs" />
     <Compile Include="ATrust\ATrustCredentials.cs" />
     <Compile Include="ATrust\ATrustSignerInput.cs" />
-    <Compile Include="Dto\QrData.cs" />
-    <Compile Include="Dto\SignedData.cs" />
     <Compile Include="ATrust\ATrustSignerResponse.cs" />
-    <Compile Include="Dto\Receipt.cs" />
-    <Compile Include="Dto\SignerOutput.cs" />
     <Compile Include="ATrust\SimpleHttpClient.cs" />
-    <Compile Include="Dto\TaxData.cs" />
-    <Compile Include="AesKeyGenerator.cs" />
     <Compile Include="ATrust\ATrustSigner.cs" />
+    <Compile Include="Dto\ByteValue.cs" />
+    <Compile Include="Dto\CertificateInfo.cs" />
+    <Compile Include="Dto\ChainValue.cs" />
+    <Compile Include="Dto\CurrencyValue.cs" />
+    <Compile Include="Dto\EncryptedTurnover.cs" />
+    <Compile Include="Dto\Identifiers\CertificateSerialNumber.cs" />
+    <Compile Include="Dto\Identifiers\Identifier.cs" />
+    <Compile Include="Dto\Identifiers\IntIdentifier.cs" />
+    <Compile Include="Dto\Identifiers\JwsRepresentation.cs" />
+    <Compile Include="Dto\Identifiers\JwsSignature.cs" />
+    <Compile Include="Dto\Identifiers\ReceiptNumber.cs" />
+    <Compile Include="Dto\Identifiers\RegisterIdentifier.cs" />
+    <Compile Include="Dto\Identifiers\StringIdentifier.cs" />
+    <Compile Include="Dto\LocalDateTime.cs" />
+    <Compile Include="Dto\QrData.cs" />
+    <Compile Include="Dto\Receipt.cs" />
+    <Compile Include="Dto\SignedData.cs" />
+    <Compile Include="Dto\SignerOutput.cs" />
+    <Compile Include="Dto\TaxData.cs" />
     <Compile Include="ISigner.cs" />
     <Compile Include="Offline\OfflineSigner.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -97,7 +94,9 @@
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
-    <None Include="Mews.Registrierkassen.nuspec" />
+    <None Include="Mews.Registrierkassen.nuspec">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -12,5 +12,10 @@ namespace Mews.Registrierkassen.Dto
                 throw new ArgumentException("Unexpected number of bytes.");
             }
         }
+
+        public ChainValue(string base64Value)
+            : base(base64Value)
+        {
+        }
     }
 }

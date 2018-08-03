@@ -5,7 +5,7 @@ namespace Mews.Registrierkassen.Dto.Identifiers
     public class JwsRepresentation : StringIdentifier
     {
         public static readonly Regex Pattern = new Regex(".+");
-    
+
         public JwsRepresentation(string value)
             : base(value, Pattern)
         {

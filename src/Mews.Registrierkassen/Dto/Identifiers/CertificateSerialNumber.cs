@@ -1,5 +1,4 @@
 ﻿using System.Text.RegularExpressions;
-using Mews.Registrierkassen.Dto.Identifiers;
 
 namespace Mews.Registrierkassen.Dto.Identifiers
 {

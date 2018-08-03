@@ -4,12 +4,10 @@ namespace Mews.Registrierkassen.Dto
 {
     public sealed class LocalDateTime
     {
-        public static TimeZoneInfo AustrianTimezone = TimeZoneInfo.FindSystemTimeZoneById("Central Europe Standard Time");
-
-        public LocalDateTime(DateTime dateTime, TimeZoneInfo timezoneInfo)
+        public LocalDateTime(DateTime dateTime, TimeZoneInfo timeZoneInfo)
         {
             DateTime = dateTime;
-            TimeZoneInfo = timezoneInfo;
+            TimeZoneInfo = timeZoneInfo;
         }
 
         public static LocalDateTime Now
@@ -20,5 +18,22 @@ namespace Mews.Registrierkassen.Dto
         public DateTime DateTime { get; }
 
         public TimeZoneInfo TimeZoneInfo { get; }
+
+        public string ToString(TimeZoneInfo timeZone)
+        {
+            var dateTimeUtc = TimeZoneInfo.ConvertTimeToUtc(DateTime, TimeZoneInfo);
+            var dateTimeTimeZone = TimeZoneInfo.ConvertTimeFromUtc(dateTimeUtc, timeZone);
+            var date = DateTime.SpecifyKind(new DateTime(dateTimeTimeZone.Ticks - dateTimeTimeZone.Ticks % TimeSpan.TicksPerSecond), DateTimeKind.Local);
+            return date.ToString("yyyy-MM-ddTHH:mm:ss");
+        }
+
+        public static LocalDateTime Parse(string value, TimeZoneInfo timeZone)
+        {
+            if (DateTime.TryParse(value, out DateTime val))
+            {
+                return new LocalDateTime(val, timeZone);
+            }
+            throw new ArgumentException($"Value '{value}' is not a valid DateTime.");
+        }
     }
 }
