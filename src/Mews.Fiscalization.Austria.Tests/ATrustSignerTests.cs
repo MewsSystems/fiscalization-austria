@@ -3,11 +3,10 @@ using System.Globalization;
 using Mews.Fiscalization.Austria.ATrust;
 using Mews.Fiscalization.Austria.Dto;
 using Mews.Fiscalization.Austria.Dto.Identifiers;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 
 namespace Mews.Fiscalization.Austria.Tests
 {
-    [TestClass]
     public class ATrustSignerTests
     {
         private static ATrustCredentials Credentials
@@ -15,7 +14,7 @@ namespace Mews.Fiscalization.Austria.Tests
             get { return new ATrustCredentials(user: new ATrustUserIdentifier("u123456789"), password: "123456789"); }
         }
 
-        [TestMethod]
+        [Test]
         public void ATrustSignerWorks()
         {
             var austrianTimeZone = TimeZoneInfo.FindSystemTimeZoneById("Central Europe Standard Time");
@@ -42,7 +41,7 @@ namespace Mews.Fiscalization.Austria.Tests
             Assert.IsNotNull(result);
         }
 
-        [TestMethod]
+        [Test]
         public void GetCertificateInfoWorks()
         {
             var info = new ATrustSigner(Credentials, ATrustEnvironment.Test).GetCertificateInfo();
