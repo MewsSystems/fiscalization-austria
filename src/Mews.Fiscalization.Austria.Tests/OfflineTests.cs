@@ -5,7 +5,6 @@ using Mews.Fiscalization.Austria.Dto;
 using Mews.Fiscalization.Austria.Dto.Identifiers;
 using Mews.Fiscalization.Austria.Offline;
 using NUnit.Framework;
-using NUnit.Framework.Internal;
 
 namespace Mews.Fiscalization.Austria.Tests
 {

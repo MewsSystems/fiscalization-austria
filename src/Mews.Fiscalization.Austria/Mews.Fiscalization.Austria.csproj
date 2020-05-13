@@ -9,7 +9,7 @@
     <PackageProjectUrl></PackageProjectUrl>
     <RepositoryUrl>https://github.com/MewsSystems/registrierkassen</RepositoryUrl>
     <LicenseUrl>https://github.com/MewsSystems/registrierkassen/blob/master/LICENSE</LicenseUrl>
-    <Version>1.0.0</Version>
+    <Version>2.0.0</Version>
   </PropertyGroup>
 
   <ItemGroup>
