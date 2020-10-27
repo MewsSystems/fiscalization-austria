@@ -5,10 +5,12 @@
     <Authors>Mews Systems</Authors>
     <Company>Mews Systems</Company>
     <PackageTags>fiscalization austria Registrierkassen</PackageTags>
+    <Description>Client for ATrust - Austrian Registrierkassen</Description>
     <Copyright>Copyright 2020</Copyright>
     <PackageProjectUrl></PackageProjectUrl>
     <RepositoryUrl>https://github.com/MewsSystems/registrierkassen</RepositoryUrl>
-    <LicenseUrl>https://github.com/MewsSystems/registrierkassen/blob/master/LICENSE</LicenseUrl>
+    <License>https://github.com/MewsSystems/registrierkassen/blob/master/LICENSE</LicenseUrl>
+    <Icon>https://raw.githubusercontent.com/msigut/eet/master/receipt.png</Icon>
     <Version>2.0.1</Version>
   </PropertyGroup>
 
