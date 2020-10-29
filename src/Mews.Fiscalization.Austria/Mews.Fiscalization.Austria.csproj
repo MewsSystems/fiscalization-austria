@@ -11,7 +11,7 @@
     <RepositoryUrl>https://github.com/MewsSystems/registrierkassen</RepositoryUrl>
     <License>https://github.com/MewsSystems/registrierkassen/blob/master/LICENSE</License>
     <Icon>https://raw.githubusercontent.com/msigut/eet/master/receipt.png</Icon>
-    <Version>2.0.1</Version>
+    <Version>2.1.0</Version>
   </PropertyGroup>
 
   <ItemGroup>
