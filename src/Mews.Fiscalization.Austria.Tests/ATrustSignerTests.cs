@@ -26,7 +26,6 @@ namespace Mews.Fiscalization.Austria.Tests
         public void ATrustSignerWorks()
         {
             var isWindows = RuntimeInformation.IsOSPlatform(OSPlatform.Windows);
-            Console.WriteLine($"Is windows: {isWindows}");
             var europeTimeZone = "Central Europe Standard Time";
             var austrianTimeZone= TimeZoneInfo.FindSystemTimeZoneById(isWindows ? europeTimeZone : TZConvert.WindowsToIana(europeTimeZone));
             var austrianCulture = CultureInfo.GetCultureInfo("de-AT");
