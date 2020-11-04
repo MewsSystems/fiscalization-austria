@@ -7,7 +7,7 @@
     <PackageTags>fiscalization austria Registrierkassen</PackageTags>
     <Description>Client for ATrust - Austrian Registrierkassen</Description>
     <Copyright>Copyright 2020</Copyright>
-    <PackageProjectUrl></PackageProjectUrl>
+    <PackageProjectUrl>https://github.com/MewsSystems/fiscalization-austria</PackageProjectUrl>
     <RepositoryUrl>https://github.com/MewsSystems/registrierkassen</RepositoryUrl>
     <License>https://github.com/MewsSystems/registrierkassen/blob/master/LICENSE</License>
     <Icon>https://raw.githubusercontent.com/msigut/eet/master/receipt.png</Icon>
