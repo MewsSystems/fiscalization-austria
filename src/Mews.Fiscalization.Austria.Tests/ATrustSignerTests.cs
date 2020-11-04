@@ -4,6 +4,7 @@ using Mews.Fiscalization.Austria.ATrust;
 using Mews.Fiscalization.Austria.Dto;
 using Mews.Fiscalization.Austria.Dto.Identifiers;
 using NUnit.Framework;
+using TimeZoneConverter;
 
 namespace Mews.Fiscalization.Austria.Tests
 {
@@ -23,7 +24,7 @@ namespace Mews.Fiscalization.Austria.Tests
         [Test]
         public void ATrustSignerWorks()
         {
-            var austrianTimeZone = TimeZoneInfo.FindSystemTimeZoneById("Central Europe Standard Time");
+            var austrianTimeZone= TZConvert.GetTimeZoneInfo("Central Europe Standard Time");
             var austrianCulture = CultureInfo.GetCultureInfo("de-AT");
             var signer = new ATrustSigner(Credentials, ATrustEnvironment.Test);
             var result = signer.Sign(new QrData(new Receipt(
