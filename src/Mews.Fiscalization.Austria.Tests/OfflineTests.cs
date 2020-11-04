@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Globalization;
+using System.Runtime.InteropServices;
 using Mews.Fiscalization.Austria.Dto;
 using Mews.Fiscalization.Austria.Dto.Identifiers;
 using Mews.Fiscalization.Austria.Offline;
 using NUnit.Framework;
+using TimeZoneConverter;
 
 namespace Mews.Fiscalization.Austria.Tests
 {
@@ -25,7 +27,9 @@ namespace Mews.Fiscalization.Austria.Tests
                 }
             };
 
-            var austrianTimeZone = TimeZoneInfo.FindSystemTimeZoneById("Central Europe Standard Time");
+            var isWindows = RuntimeInformation.IsOSPlatform(OSPlatform.Windows);
+            var europeTimeZone = "Central Europe Standard Time";
+            var austrianTimeZone = TimeZoneInfo.FindSystemTimeZoneById(isWindows ? europeTimeZone : TZConvert.WindowsToIana(europeTimeZone));
             var austrianCulture = CultureInfo.GetCultureInfo("de-AT");
 
             var signer = new OfflineSigner(certificateInfo);
