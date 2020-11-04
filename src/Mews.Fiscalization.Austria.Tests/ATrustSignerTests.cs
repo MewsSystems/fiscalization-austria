@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Globalization;
+using System.Runtime.InteropServices;
 using Mews.Fiscalization.Austria.ATrust;
 using Mews.Fiscalization.Austria.Dto;
 using Mews.Fiscalization.Austria.Dto.Identifiers;
@@ -24,7 +25,9 @@ namespace Mews.Fiscalization.Austria.Tests
         [Test]
         public void ATrustSignerWorks()
         {
-            var austrianTimeZone= TZConvert.GetTimeZoneInfo("Central Europe Standard Time");
+            var isWindows = RuntimeInformation.IsOSPlatform(OSPlatform.Windows);
+            var europeTimeZone = "Central Europe Standard Time";
+            var austrianTimeZone= TimeZoneInfo.FindSystemTimeZoneById(isWindows ? europeTimeZone : TZConvert.WindowsToIana(europeTimeZone));
             var austrianCulture = CultureInfo.GetCultureInfo("de-AT");
             var signer = new ATrustSigner(Credentials, ATrustEnvironment.Test);
             var result = signer.Sign(new QrData(new Receipt(
