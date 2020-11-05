@@ -1,6 +1,4 @@
-﻿using System;
-using System.Data;
-using System.Security.Cryptography;
+﻿using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using Mews.Fiscalization.Austria.Dto;
@@ -11,15 +9,12 @@ namespace Mews.Fiscalization.Austria.Offline
 {
     public class OfflineSigner : ISigner
     {
-        public OfflineSigner(CertificateInfo certificateInfo)
+        public OfflineSigner(X509Certificate2 certificate)
         {
-            Certificate = ParseCertificate(certificateInfo);
-            CertificateInfo = certificateInfo;
+            Certificate = certificate;
         }
 
-        private X509Certificate2 Certificate { get; }
-
-        private CertificateInfo CertificateInfo { get; }
+        public X509Certificate2 Certificate { get; }
 
         public SignerOutput Sign(QrData qrData)
         {
@@ -33,16 +28,6 @@ namespace Mews.Fiscalization.Austria.Offline
 
             var jwsRepresentation = $"{jwsHeaderBase64Url}.{jwsPayloadBase64Url}.{jwsSignatureBase64Url}";
             return new SignerOutput(new JwsRepresentation(jwsRepresentation), qrData);
-        }
-
-        public CertificateInfo GetCertificateInfo()
-        {
-            return CertificateInfo;
-        }
-
-        private X509Certificate2 ParseCertificate(CertificateInfo certificateInfo)
-        {
-            return new X509Certificate2(Convert.FromBase64String(certificateInfo.Certificate));
         }
     }
 }

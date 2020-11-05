@@ -5,7 +5,5 @@ namespace Mews.Fiscalization.Austria
     public interface ISigner
     {
         SignerOutput Sign(QrData qrData);
-
-        CertificateInfo GetCertificateInfo();
     }
 }
