@@ -21,5 +21,14 @@ namespace Mews.Fiscalization.Austria.Dto.Identifiers
                 throw new ArgumentException($"The value '{value}' does not match the pattern '{pattern}'");
             }
         }
+
+        protected static bool IsValid(string value, Regex pattern)
+        {
+            if (pattern == null)
+            {
+                throw new ArgumentNullException(nameof(pattern));
+            }
+            return value != null && pattern.IsMatch(value);
+        }
     }
 }

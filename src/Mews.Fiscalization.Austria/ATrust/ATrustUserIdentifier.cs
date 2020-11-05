@@ -11,5 +11,10 @@ namespace Mews.Fiscalization.Austria.ATrust
             : base(value, Pattern)
         {
         }
+
+        public static bool IsValid(string value)
+        {
+            return IsValid(value, Pattern);
+        }
     }
 }
