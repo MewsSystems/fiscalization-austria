@@ -36,12 +36,4 @@ jobs:
       run: dotnet build --configuration Release --no-restore
     
     - name: Test
-      env:
-        user_id: ${{secrets.user_id}}
-        password: ${{secrets.password}}
-        certificate_serial_number: ${{secrets.certificate_serial_number}}
-        jws_representation: ${{secrets.jws_representation}}
-        certificate_key: ${{secrets.certificate_key}}
-        offline_certificate_key: ${{secrets.offline_certificate_key}}
-        offline_certificate_password: ${{secrets.offline_certificate_password}}
       run: dotnet test --no-restore --verbosity normal
