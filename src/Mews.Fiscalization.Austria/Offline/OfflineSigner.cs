@@ -23,7 +23,7 @@ namespace Mews.Fiscalization.Austria.Offline
             var jwsPayloadBase64Url = Base64UrlEncoder.Encode(qrData.Value);
             var jwsDataToBeSigned = jwsHeaderBase64Url + "." + jwsPayloadBase64Url;
 
-            var bytes = Certificate.GetRSAPrivateKey().SignData(Encoding.UTF8.GetBytes(jwsDataToBeSigned), HashAlgorithmName.SHA256, RSASignaturePadding.Pkcs1);
+            var bytes = Certificate.GetECDsaPrivateKey().SignData(Encoding.UTF8.GetBytes(jwsDataToBeSigned), HashAlgorithmName.SHA256);
             var jwsSignatureBase64Url = Base64UrlEncoder.Encode(bytes);
 
             var jwsRepresentation = $"{jwsHeaderBase64Url}.{jwsPayloadBase64Url}.{jwsSignatureBase64Url}";
