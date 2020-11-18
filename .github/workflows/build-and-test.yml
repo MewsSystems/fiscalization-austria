@@ -10,7 +10,7 @@ on:
 
 jobs:
   build:
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
     
     env:
       DOTNET_NOLOGO: true
@@ -42,4 +42,6 @@ jobs:
         certificate_serial_number: ${{secrets.certificate_serial_number}}
         jws_representation: ${{secrets.jws_representation}}
         certificate_key: ${{secrets.certificate_key}}
+        offline_certificate_key: ${{secrets.offline_certificate_key}}
+        offline_certificate_password: ${{secrets.offline_certificate_password}}
       run: dotnet test --no-restore --verbosity normal

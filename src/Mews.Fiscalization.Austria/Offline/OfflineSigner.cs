@@ -1,5 +1,4 @@
 ﻿using System.Security.Cryptography;
-using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using Mews.Fiscalization.Austria.Dto;
 using Mews.Fiscalization.Austria.Dto.Identifiers;
@@ -9,12 +8,12 @@ namespace Mews.Fiscalization.Austria.Offline
 {
     public class OfflineSigner : ISigner
     {
-        public OfflineSigner(X509Certificate2 certificate)
+        public OfflineSigner(Certificate certificate)
         {
             Certificate = certificate;
         }
 
-        public X509Certificate2 Certificate { get; }
+        public Certificate Certificate { get; }
 
         public SignerOutput Sign(QrData qrData)
         {
@@ -23,7 +22,7 @@ namespace Mews.Fiscalization.Austria.Offline
             var jwsPayloadBase64Url = Base64UrlEncoder.Encode(qrData.Value);
             var jwsDataToBeSigned = jwsHeaderBase64Url + "." + jwsPayloadBase64Url;
 
-            var bytes = Certificate.GetECDsaPrivateKey().SignData(Encoding.UTF8.GetBytes(jwsDataToBeSigned), HashAlgorithmName.SHA256);
+            var bytes = Certificate.PrivateKey.SignData(Encoding.UTF8.GetBytes(jwsDataToBeSigned), HashAlgorithmName.SHA256, RSASignaturePadding.Pkcs1);
             var jwsSignatureBase64Url = Base64UrlEncoder.Encode(bytes);
 
             var jwsRepresentation = $"{jwsHeaderBase64Url}.{jwsPayloadBase64Url}.{jwsSignatureBase64Url}";
