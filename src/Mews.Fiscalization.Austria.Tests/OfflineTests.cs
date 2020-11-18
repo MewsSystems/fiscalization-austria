@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Globalization;
 using System.Runtime.InteropServices;
+using System.Security.Cryptography.X509Certificates;
 using Mews.Fiscalization.Austria.Dto;
 using Mews.Fiscalization.Austria.Dto.Identifiers;
 using Mews.Fiscalization.Austria.Offline;
@@ -17,7 +18,7 @@ namespace Mews.Fiscalization.Austria.Tests
         [Test]
         public void OfflineSignatureWorks()
         {
-            var certificate = new Certificate(CertificatePassword, Convert.FromBase64String(CertificateData));
+            var certificate = new X509Certificate2(Convert.FromBase64String(CertificateData), CertificatePassword, X509KeyStorageFlags.DefaultKeySet);
             var isWindows = RuntimeInformation.IsOSPlatform(OSPlatform.Windows);
             var europeTimeZone = "Central Europe Standard Time";
             var austrianTimeZone = TimeZoneInfo.FindSystemTimeZoneById(isWindows ? europeTimeZone : TZConvert.WindowsToIana(europeTimeZone));
@@ -33,7 +34,7 @@ namespace Mews.Fiscalization.Austria.Tests
                     specialRate: new CurrencyValue(21.19m)
                 ),
                 turnover: new CurrencyValue(0.0m),
-                certificateSerialNumber: new CertificateSerialNumber(certificate.X509Certificate2.SerialNumber),
+                certificateSerialNumber: new CertificateSerialNumber(certificate.SerialNumber),
                 previousJwsRepresentation: new JwsRepresentation("eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCJ9.WDFJeExVRlVNVjloT0RRME1URXpZaTFoTTJRM0xUUmxObU10T0RGak9DMDJOalU0TXpnMk9HVm1NelpmTTE4eU1ERTNMVEV5TFRFeVZERXlPalV6T2pVMlh6QXNNREJmTVRBd0xEQXdYekFzTURCZk1Dd3dNRjh3TERBd1h6ZzNMMnR2YW05RVYwUjNQVjh3TUVJd05qQkJNRUkwTWpFMlJUQXhSRFJmZVROVVp6TXlOV1Z0Y0UwOQ.6mzl1HSWmJyWaUG0pZlNuF29Eg9jocyXSuBxYWnwskE3fpVLd2PTIHG9ecBvQnCW3SokaMiEEgYN969Z4P7i0w"),
                 key: Convert.FromBase64String("RCsRmHn5tkLQrRpiZq2ucwPpwvHJLiMgLvwrwEImddI="),
                 created: new LocalDateTime(
