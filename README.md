@@ -37,7 +37,7 @@ fiscalRecord.Signature = output.JwsRepresentation.Signature.Value;
 ```
 
 ## Security protocol
-- TLS 1.2 or TLS 1.1 protocols must be enabled, that can be achieved by adding the following line to your code:
+- TLS 1.1 and TLS 1.2 protocols must be enabled, that can be achieved by adding the following line to your code:
 ```csharp
 ServicePointManager.SecurityProtocol |= SecurityProtocolType.Tls12 | SecurityProtocolType.Tls11
 ```
