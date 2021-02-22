@@ -1,5 +1,4 @@
-﻿using System.Net;
-using Mews.Fiscalization.Austria.Dto;
+﻿using Mews.Fiscalization.Austria.Dto;
 using Mews.Fiscalization.Austria.Dto.Identifiers;
 using Newtonsoft.Json;
 
