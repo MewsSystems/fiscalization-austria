@@ -36,6 +36,12 @@ fiscalRecord.QrData = output.SignedQrData.Value;
 fiscalRecord.Signature = output.JwsRepresentation.Signature.Value;
 ```
 
+## Security protocol
+- TLS 1.2 or TLS 1.1 protocols must be enabled, that can be achieved by adding the following line to your code:
+```csharp
+ServicePointManager.SecurityProtocol |= SecurityProtocolType.Tls12 | SecurityProtocolType.Tls11
+```
+
 # NuGet
 
 We have published the library as [Mews.Fiscalization.Austria](https://www.nuget.org/packages/Mews.Fiscalization.Austria/).
