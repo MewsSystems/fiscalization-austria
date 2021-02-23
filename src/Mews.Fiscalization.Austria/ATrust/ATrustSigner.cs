@@ -1,5 +1,4 @@
-﻿using System.Net;
-using Mews.Fiscalization.Austria.Dto;
+﻿using Mews.Fiscalization.Austria.Dto;
 using Mews.Fiscalization.Austria.Dto.Identifiers;
 using Newtonsoft.Json;
 
@@ -13,7 +12,6 @@ namespace Mews.Fiscalization.Austria.ATrust
             var environmentDomain = environment == ATrustEnvironment.Production ? "www" : "hs-abnahme";
             var endpointUrl = new EndpointUrl($"https://{environmentDomain}.a-trust.at/asignrkonline/v2/{Credentials.User.Value}");
             HttpClient = new SimpleHttpClient(endpointUrl);
-            EnableCipherSupportedCipherSuites();
         }
 
         public ATrustCredentials Credentials { get; }
@@ -35,11 +33,6 @@ namespace Mews.Fiscalization.Austria.ATrust
         {
             var responseBody = HttpClient.GetJson("Certificate");
             return JsonConvert.DeserializeObject<CertificateInfo>(responseBody);
-        }
-
-        private void EnableCipherSupportedCipherSuites()
-        {
-            ServicePointManager.SecurityProtocol |= SecurityProtocolType.Tls12 | SecurityProtocolType.Tls11;
         }
     }
 }
